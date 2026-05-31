@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>FrameWire — Request Beta Access</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --fw-bg: #05060A;
+    --fw-surface: #0B0E16;
+    --fw-fg: #f4f6fb;
+    --fw-fg-2: #c2c8d6;
+    --fw-muted: #9aa2b3;
+    --fw-dim: #6b7488;
+    --fw-blue: #2f7fe0;
+    --fw-blue-hi: #3d8cf0;
+    --fw-border: #232c3d;
+    --fw-input-border: #2a3447;
+    --fw-sans: 'Trebuchet MS', 'Segoe UI', Tahoma, sans-serif;
+  }
+
+  html { background: var(--fw-bg); }
+  body {
+    background: var(--fw-bg);
+    color: #cdd2de;
+    font-family: var(--fw-sans);
+    min-height: 100vh;
+    min-height: 100dvh;
+    padding: clamp(40px, 6vh, 72px) clamp(24px, 7vw, 120px);
+    /* faint pool of brand light, centered — same recipe as the landing */
+    background-image:
+      radial-gradient(ellipse 60% 46% at 50% 30%,
+        rgba(47, 127, 224, 0.07) 0%,
+        rgba(47, 127, 224, 0.02) 48%,
+        transparent 78%);
+  }
+
+  /* full-page, free layout — fills the width rather than a narrow column */
+  .wrap { width: 100%; }
+
+  /* --- back link --- */
+  .back {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 13px;
+    letter-spacing: 0.02em;
+    color: var(--fw-dim);
+    text-decoration: none;
+    margin-bottom: 34px;
+    transition: color 0.2s ease;
+  }
+  .back:hover { color: var(--fw-fg-2); }
+  .back .arrow { font-size: 15px; line-height: 1; }
+
+  /* --- logo header --- */
+  .head {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 34px;
+  }
+  .head .mark {
+    width: 46px;
+    height: auto;
+    margin-bottom: 14px;
+    filter: drop-shadow(0 0 16px rgba(47, 127, 224, 0.4));
+  }
+  .head .word {
+    font-weight: 700;
+    font-size: 28px;
+    letter-spacing: -0.01em;
+    color: var(--fw-fg);
+    line-height: 1;
+  }
+  .head .word .wire { color: var(--fw-blue); }
+
+  .kicker {
+    font-size: 11px;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: var(--fw-dim);
+    margin-bottom: 16px;
+  }
+  .title {
+    font-weight: 700;
+    font-size: clamp(30px, 5vw, 38px);
+    line-height: 1.08;
+    letter-spacing: -0.01em;
+    color: var(--fw-fg);
+    margin: 0 0 24px;
+  }
+  .intro {
+    font-size: 16px;
+    line-height: 1.62;
+    color: var(--fw-muted);
+    margin: 0 0 8px;
+  }
+
+  /* intro/header block: centered, readable measure, while the form below
+     spreads across the full page width */
+  .intro-block { max-width: 720px; margin: 0 auto; text-align: center; }
+
+  /* “beta not open yet” notice */
+  .lock-banner {
+    max-width: 720px;
+    margin: 28px auto 0;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    justify-content: center;
+    text-align: left;
+    background: rgba(47, 127, 224, 0.08);
+    border: 1px solid rgba(47, 127, 224, 0.30);
+    border-radius: 4px;
+    padding: 14px 18px;
+  }
+  .lock-banner .dot {
+    flex: none;
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--fw-blue);
+    box-shadow: 0 0 10px rgba(47, 127, 224, 0.7);
+  }
+  .lock-banner p { font-size: 14px; line-height: 1.55; color: var(--fw-fg-2); margin: 0; }
+  .lock-banner strong { color: var(--fw-fg); font-weight: 700; }
+
+  /* full-width responsive form grid */
+  .form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px 48px;
+    align-items: start;
+  }
+  .span-2 { grid-column: 1 / -1; }
+  @media (max-width: 760px) {
+    .form-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 560px) {
+    .head .word { font-size: 24px; }
+    .title { font-size: 26px; }
+    .intro { font-size: 15px; }
+    .lock-banner { align-items: flex-start; padding: 13px 15px; }
+    .lock-banner .dot { margin-top: 6px; }
+    .field { margin-bottom: 20px; }
+    .chip { padding: 9px 13px; }
+    .submit { padding: 16px; }
+  }
+
+  /* locked controls — every field is disabled until beta opens */
+  .input:disabled, .textarea:disabled, .select:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: #0e131c;
+    color: var(--fw-dim);
+    -webkit-text-fill-color: var(--fw-dim);
+  }
+  .chip.locked { opacity: 0.45; cursor: not-allowed; pointer-events: none; }
+
+  .rule { height: 1px; background: var(--fw-border); border: none; margin: 32px auto; max-width: 720px; }
+
+  .field { margin-bottom: 24px; }
+  .label {
+    display: block;
+    font-size: 14px;
+    letter-spacing: 0.01em;
+    color: var(--fw-fg-2);
+    margin: 0 0 9px;
+  }
+  .label .opt { color: var(--fw-dim); }
+
+  .input, .textarea, .select {
+    width: 100%;
+    box-sizing: border-box;
+    background: #121925;
+    border: 1px solid var(--fw-input-border);
+    border-radius: 3px;
+    padding: 13px 15px;
+    font-family: var(--fw-sans);
+    font-size: 16px;
+    color: var(--fw-fg);
+    outline: none;
+    transition: border-color 0.22s ease, background 0.22s ease;
+  }
+  .input::placeholder, .textarea::placeholder { color: #5d6678; }
+  .input:focus, .textarea:focus, .select:focus { border-color: var(--fw-blue); background: #16202f; }
+  .textarea { resize: vertical; min-height: 92px; line-height: 1.55; }
+
+  .select {
+    padding-right: 40px;
+    cursor: pointer;
+    appearance: none; -webkit-appearance: none; -moz-appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'><path d='M1 1l5 5 5-5' stroke='%237e8699' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 15px center;
+  }
+  .select.placeholder { color: #5d6678; }
+  .select option { color: var(--fw-fg); background: #121925; }
+  .select option:disabled { color: #5d6678; }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip {
+    font-size: 14px;
+    padding: 8px 14px;
+    border-radius: 3px;
+    border: 1px solid var(--fw-input-border);
+    background: #121925;
+    color: var(--fw-muted);
+    cursor: pointer;
+    transition: all 0.18s ease;
+    user-select: none;
+  }
+  .chip:hover { border-color: #3d4a63; color: #cdd2de; }
+  .chip.sel { background: var(--fw-blue); border-color: var(--fw-blue); color: #fff; font-weight: 600; }
+
+  .disclaimer {
+    font-size: 14px;
+    line-height: 1.7;
+    color: #7e8699;
+    border-left: 2px solid var(--fw-input-border);
+    padding-left: 18px;
+    margin: 8px 0 28px;
+  }
+  .disclaimer p { margin: 0 0 12px; }
+  .disclaimer p:last-child { margin-bottom: 0; }
+
+  .submit {
+    width: 100%;
+    font-family: var(--fw-sans);
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: 0.01em;
+    padding: 15px;
+    background: #161b25;
+    color: var(--fw-dim);
+    border: 1px solid var(--fw-input-border);
+    border-radius: 3px;
+    cursor: not-allowed;
+  }
+
+  .error { font-size: 14px; color: #e0876b; margin: 0 0 18px; min-height: 0; }
+
+  /* --- success state --- */
+  .success { text-align: center; animation: fadeUp 0.7s ease both; }
+  .success .mark { width: 54px; height: auto; margin-bottom: 22px; filter: drop-shadow(0 0 18px rgba(47, 127, 224, 0.45)); }
+  .success .lead {
+    display: block;
+    font-weight: 700;
+    font-size: 26px;
+    letter-spacing: -0.01em;
+    color: var(--fw-fg);
+    margin-bottom: 18px;
+  }
+  .success p { font-size: 17px; line-height: 1.72; color: var(--fw-muted); margin: 0 auto; max-width: 420px; }
+  .success .home {
+    display: inline-block;
+    margin-top: 32px;
+    font-size: 14px;
+    color: var(--fw-muted);
+    text-decoration: none;
+    padding-bottom: 3px;
+    border-bottom: 1px solid rgba(170, 177, 194, 0.28);
+    transition: color 0.2s ease, border-color 0.2s ease;
+  }
+  .success .home:hover { color: var(--fw-fg); border-bottom-color: var(--fw-blue); }
+
+  .hidden { display: none !important; }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+</style>
+</head>
+<body>
+  <div class="wrap" data-screen-label="Beta — Form" id="formView">
+    <a class="back" href="FrameWire.html"><span class="arrow">←</span> Back</a>
+
+    <div class="head">
+      <img class="mark" src="assets/framewire-logo-white.png" alt="FrameWire" />
+      <div class="word">Frame<span class="wire">Wire</span></div>
+    </div>
+
+    <div class="intro-block">
+      <div class="kicker">Guided Beta</div>
+      <h1 class="title">Request Beta Access</h1>
+
+      <p class="intro">FrameWire is currently in a guided beta phase.</p>
+      <p class="intro">This beta is focused on understanding how people investigate narratives, contextual intelligence, emotional shifts, and evolving information ecosystems.</p>
+
+      <div class="lock-banner">
+        <span class="dot"></span>
+        <p><strong>Beta applications are not open yet.</strong> The form below is a preview &mdash; you'll be able to apply once FrameWire opens its guided beta.</p>
+      </div>
+    </div>
+
+    <hr class="rule" />
+
+    <p class="error hidden" id="error"></p>
+
+    <div class="form-grid">
+      <div class="field">
+        <label class="label" for="email">Email Address</label>
+        <input class="input" id="email" type="email" placeholder="you@example.com" autocomplete="email" disabled />
+      </div>
+
+      <div class="field">
+        <label class="label" for="occ">Occupation / Role</label>
+        <input class="input" id="occ" type="text" placeholder="Journalist, Researcher, Student, Analyst, Media, NGO…" disabled />
+      </div>
+
+      <div class="field span-2">
+        <label class="label" for="country">Country</label>
+        <select class="select placeholder" id="country" disabled></select>
+      </div>
+
+      <div class="field span-2">
+        <label class="label">What interests you most about FrameWire?</label>
+        <div class="chips" id="chips"></div>
+      </div>
+
+      <div class="field span-2">
+        <label class="label" for="notes">Anything you'd like us to know? <span class="opt">(optional)</span></label>
+        <textarea class="textarea" id="notes" placeholder="Questions, expectations, workflows, or areas you're interested in exploring." disabled></textarea>
+      </div>
+
+      <div class="disclaimer span-2">
+        <p>FrameWire is an active beta environment.</p>
+        <p>Features, analysis quality, workflows, and outputs may evolve during testing. AI-generated insights should always be reviewed critically and verified independently.</p>
+        <p>We do not request personal identity documents, phone numbers, or sensitive personal information for beta access.</p>
+      </div>
+
+      <div class="span-2">
+        <button class="submit" id="submit" disabled>Applications Not Open Yet</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- success -->
+  <div class="wrap success hidden" data-screen-label="Beta — Success" id="successView">
+    <img class="mark" src="assets/framewire-logo-white.png" alt="FrameWire" />
+    <span class="lead">Thank you for your interest in FrameWire.</span>
+    <p>Beta invitations are reviewed manually. If approved, you will receive an email with access instructions within 2&ndash;3 working days.</p>
+    <a class="home" href="FrameWire.html">Return home</a>
+  </div>
+
+  <script>
+    var INTERESTS = [
+      "Narrative Tracking", "Fact-checking", "Emotional Analysis",
+      "Threat / Risk Intelligence", "Political / Public Discourse",
+      "Research & Investigation", "Journalism", "General Curiosity"
+    ];
+    var COUNTRIES = [
+      "Nepal","India","Bangladesh","Pakistan","Sri Lanka","Bhutan","Maldives","Afghanistan","—",
+      "Australia","Bahrain","Brazil","Canada","China","Egypt","France","Germany","Hong Kong",
+      "Indonesia","Iran","Iraq","Israel","Italy","Japan","Jordan","Kenya","Kuwait","Malaysia",
+      "Mexico","Myanmar","Netherlands","New Zealand","Nigeria","Oman","Philippines","Qatar","Russia",
+      "Saudi Arabia","Singapore","South Africa","South Korea","Spain","Sweden","Switzerland",
+      "Thailand","Turkey","United Arab Emirates","United Kingdom","United States","Vietnam","Other"
+    ];
+
+    var selectedInterest = "";
+
+    // build country select
+    var sel = document.getElementById('country');
+    var ph = document.createElement('option');
+    ph.value = ""; ph.selected = true; ph.hidden = true; ph.textContent = "Select your country…";
+    sel.appendChild(ph);
+    COUNTRIES.forEach(function (c) {
+      var o = document.createElement('option');
+      if (c === "—") { o.value = "—"; o.disabled = true; o.textContent = "──────────"; }
+      else { o.value = c; o.textContent = c; }
+      sel.appendChild(o);
+    });
+    sel.selectedIndex = 0; // keep the placeholder shown, not the first country
+    sel.addEventListener('change', function () {
+      if (sel.value && sel.value !== "—") sel.classList.remove('placeholder');
+      else sel.classList.add('placeholder');
+    });
+
+    // build interest chips (locked — beta not open yet)
+    var chipWrap = document.getElementById('chips');
+    INTERESTS.forEach(function (item) {
+      var c = document.createElement('span');
+      c.className = 'chip locked';
+      c.textContent = item;
+      c.setAttribute('aria-disabled', 'true');
+      chipWrap.appendChild(c);
+    });
+
+    // Submit is disabled while the beta is closed. The validation flow below is
+    // retained for when applications open — simply remove the `disabled`
+    // attributes and the .locked chip handling to re-enable it.
+    var errEl = document.getElementById('error');
+    function showError(msg) { errEl.textContent = msg; errEl.classList.remove('hidden'); }
+    function clearError() { errEl.textContent = ""; errEl.classList.add('hidden'); }
+  </script>
+</body>
+</html>
