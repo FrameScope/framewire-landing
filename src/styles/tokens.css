@@ -1,0 +1,156 @@
+/* ─────────────────────────────────────────────────────────────────────────
+   FrameWire · Design tokens (colors · typography · spacing)
+   Ported verbatim from the design-system handoff. Fonts (Space Grotesk, Inter,
+   IBM Plex Mono) are loaded in index.html via Google Fonts.
+   ───────────────────────────────────────────────────────────────────────── */
+
+:root {
+  /* ── Canvas — near-black with a trace of blue, layered surfaces ───────── */
+  --fw-black:           #030407;
+  --fw-bg:              #05060A;
+  --fw-bg-2:            #080A11;
+  --fw-surface:         #0C0E15;
+  --fw-surface-raised:  #11141D;
+  --fw-surface-inset:   #090B11;
+
+  /* ── Hairlines — thin lines are a core FrameWire motif ───────────────── */
+  --fw-line:            rgba(255, 255, 255, 0.07);
+  --fw-line-strong:     rgba(255, 255, 255, 0.12);
+  --fw-line-bright:     rgba(255, 255, 255, 0.18);
+
+  /* ── Ink — high-contrast cool whites & greys ─────────────────────────── */
+  --fw-ink:             #F4F6FB;
+  --fw-ink-2:           #AEB4C2;
+  --fw-ink-3:           #6B7280;
+  --fw-ink-4:           #444B59;
+
+  /* ── Signal blue — the single institutional accent ───────────────────── */
+  --fw-signal:          #2F7FE0;
+  --fw-signal-bright:   #4F9BFF;
+  --fw-signal-dim:      #2563EB;
+  --fw-signal-ink:      #BFD8FF;
+  --fw-signal-wash:     rgba(47, 127, 224, 0.12);
+  --fw-signal-edge:     rgba(47, 127, 224, 0.32);
+
+  /* ── Evidence semantics — muted, meaning-only (verification states) ──── */
+  --fw-verified:        #34C77B;
+  --fw-verified-wash:   rgba(52, 199, 123, 0.12);
+  --fw-verified-edge:   rgba(52, 199, 123, 0.30);
+
+  --fw-caution:         #E0A53B;
+  --fw-caution-wash:    rgba(224, 165, 59, 0.12);
+  --fw-caution-edge:    rgba(224, 165, 59, 0.30);
+
+  --fw-conflict:        #E5556B;
+  --fw-conflict-wash:   rgba(229, 85, 107, 0.12);
+  --fw-conflict-edge:   rgba(229, 85, 107, 0.30);
+
+  --fw-neutral-mark:    #9A8CF0;
+  --fw-neutral-wash:    rgba(154, 140, 240, 0.12);
+  --fw-neutral-edge:    rgba(154, 140, 240, 0.30);
+
+  --fw-archive:         #4BB6C4;
+  --fw-archive-wash:    rgba(75, 182, 196, 0.12);
+  --fw-archive-edge:    rgba(75, 182, 196, 0.30);
+
+  /* ── Restrained glow — ambient only, never on content ────────────────── */
+  --fw-glow-signal:     radial-gradient(60% 50% at 50% 0%, rgba(47,127,224,0.10) 0%, transparent 72%);
+  --fw-glow-faint:      radial-gradient(55% 45% at 50% 10%, rgba(255,255,255,0.035) 0%, transparent 70%);
+
+  /* ── Families ────────────────────────────────────────────────────────── */
+  --font-display: 'Space Grotesk', 'Segoe UI', system-ui, sans-serif;
+  --font-body:    'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono:    'IBM Plex Mono', ui-monospace, 'SFMono-Regular', monospace;
+
+  /* ── Weights ─────────────────────────────────────────────────────────── */
+  --weight-regular:  400;
+  --weight-medium:   500;
+  --weight-semibold: 600;
+  --weight-bold:     700;
+
+  /* ── Display & heading scale ─────────────────────────────────────────── */
+  --type-display:   clamp(2.6rem, calc(1.4rem + 4.6vw), 4.75rem);
+  --type-h1:        clamp(2.1rem, calc(1.4rem + 2.6vw), 3.1rem);
+  --type-h2:        clamp(1.6rem, calc(1.2rem + 1.5vw), 2.1rem);
+  --type-h3:        1.3125rem;
+  --type-h4:        1.0625rem;
+
+  /* ── Body scale ──────────────────────────────────────────────────────── */
+  --type-lead:      clamp(1.0625rem, calc(1rem + 0.4vw), 1.25rem);
+  --type-body:      1rem;
+  --type-body-sm:   0.9375rem;
+  --type-caption:   0.8125rem;
+
+  /* ── Eyebrow / label ─────────────────────────────────────────────────── */
+  --type-eyebrow:   0.75rem;
+  --type-mono-sm:   0.75rem;
+  --type-mono-xs:   0.6875rem;
+
+  /* ── Line heights ────────────────────────────────────────────────────── */
+  --leading-display: 1.04;
+  --leading-tight:   1.15;
+  --leading-snug:    1.35;
+  --leading-body:    1.6;
+  --leading-relaxed: 1.75;
+
+  /* ── Letter spacing ──────────────────────────────────────────────────── */
+  --tracking-display: -0.03em;
+  --tracking-tight:   -0.018em;
+  --tracking-normal:  0;
+  --tracking-wide:    0.04em;
+  --tracking-eyebrow: 0.22em;
+
+  /* ── Readable measure ────────────────────────────────────────────────── */
+  --measure:        66ch;
+  --measure-narrow: 46ch;
+
+  /* ── Spacing (8px base) ──────────────────────────────────────────────── */
+  --space-1:   0.25rem;
+  --space-2:   0.5rem;
+  --space-3:   0.75rem;
+  --space-4:   1rem;
+  --space-5:   1.5rem;
+  --space-6:   2rem;
+  --space-7:   3rem;
+  --space-8:   4rem;
+  --space-9:   6rem;
+  --space-10:  8rem;
+
+  /* ── Section rhythm ──────────────────────────────────────────────────── */
+  --section-y:        clamp(4.5rem, 3rem + 7vw, 8rem);
+  --container-max:    1200px;
+  --container-narrow: 760px;
+  --gutter:           clamp(1.25rem, 0.5rem + 3vw, 2.5rem);
+
+  /* ── Radii ───────────────────────────────────────────────────────────── */
+  --radius-xs:   4px;
+  --radius-sm:   8px;
+  --radius-md:   12px;
+  --radius-lg:   16px;
+  --radius-pill: 999px;
+
+  /* ── Border widths ───────────────────────────────────────────────────── */
+  --border-1: 1px;
+  --border-2: 1.5px;
+
+  /* ── Shadows ─────────────────────────────────────────────────────────── */
+  --shadow-none:   none;
+  --shadow-sm:     0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-card:   0 8px 28px -12px rgba(0, 0, 0, 0.7);
+  --shadow-raised: 0 18px 48px -20px rgba(0, 0, 0, 0.8);
+  --shadow-focus:  0 0 0 2px var(--fw-bg), 0 0 0 4px var(--fw-signal);
+  --shadow-signal: 0 0 0 1px var(--fw-signal-edge), 0 12px 40px -16px rgba(47,127,224,0.45);
+
+  /* ── Motion ──────────────────────────────────────────────────────────── */
+  --motion-quick:  120ms;
+  --motion-calm:   260ms;
+  --motion-settle: 480ms;
+  --ease-calm:     cubic-bezier(0.22, 0.61, 0.36, 1);
+  --ease-inout:    cubic-bezier(0.45, 0, 0.2, 1);
+
+  /* ── Layout chrome ───────────────────────────────────────────────────── */
+  --nav-height:    68px;
+  --z-nav:         100;
+  --z-overlay:     200;
+  --z-modal:       300;
+}
