@@ -19,7 +19,13 @@ export function useInView(margin?: string): [React.MutableRefObject<any>, boolea
 
 /** Tracks the user's reduced-motion preference. */
 export function usePRM(): boolean {
-  const [reduced, setReduced] = useState(false);
+  // Read synchronously on first render so reduced-motion consumers settle to
+  // their completed state from the first paint (not one tick later).
+  const [reduced, setReduced] = useState(() =>
+    typeof window !== "undefined" &&
+    typeof window.matchMedia === "function" &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches
+  );
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
     const on = () => setReduced(mq.matches);
