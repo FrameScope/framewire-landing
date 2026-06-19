@@ -3,11 +3,12 @@ import { createRoot } from "react-dom/client";
 import "./styles/tokens.css";
 import "./styles/global.css";
 import "./styles/motion.css";
-// FrameWire motion homepage — the Technical Intelligence experience.
-import ProofScenes from "./ProofScenes";
+import "./styles/site.css";
+// Complete FrameWire public homepage — the guided tour is one section within it.
+import CompleteHomepage from "./CompleteHomepage";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <ProofScenes />
+    <CompleteHomepage />
   </StrictMode>,
 );
