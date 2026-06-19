@@ -58,6 +58,7 @@ function scrollTo(e: React.MouseEvent, href: string) {
 
 const NAV_LINKS: [string, string][] = [
   ["How It Works", "#how-it-works"],
+  ["Ingestion", "#ingestion"],
   ["Lenses", "#lenses"],
   ["Investigation Tools", "#tools"],
   ["Guided Tour", "#tour"],

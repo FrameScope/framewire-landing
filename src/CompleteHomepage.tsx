@@ -7,6 +7,7 @@ import { FlowStrip, HeroScene, WorkflowScene, MultilingualScene, MemoryScene } f
 import { LensExplorer } from "./components/site/LensExplorer";
 import { ToolsWorkspace } from "./components/site/ToolsWorkspace";
 import { AudienceExplorer } from "./components/site/AudienceExplorer";
+import { IngestionScene } from "./components/site/IngestionScene";
 import { GuidedTour } from "./components/site/GuidedTour";
 import { LensConceptScene } from "./components/motion/scenes/LensConceptScene";
 import { ReportStudioScene } from "./components/motion/scenes/ReportStudioScene";
@@ -57,6 +58,12 @@ export default function CompleteHomepage() {
             <p className="site-hero-msg">One subject. Multiple lenses. One evidence-backed investigation.</p>
           </div>
         </header>
+
+        {/* ── What FrameWire ingests ── */}
+        <Section id="ingestion" eyebrow="What FrameWire ingests" title="Different sources. One connected investigation." center
+          lead="FrameWire brings social media, news, government information, and uploaded material into one governed evidence process before intelligence lenses examine it.">
+          <IngestionScene />
+        </Section>
 
         {/* ── What FrameWire is ── */}
         <Section id="what" band eyebrow="What FrameWire is" title="A contextual intelligence and investigation system" center
