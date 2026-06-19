@@ -12,6 +12,7 @@ import {
   Ban, MessageSquareText, BookOpen, FolderSearch, ClipboardCheck, MessagesSquare,
   Users, Languages, Heart, BadgeCheck, Map, ListPlus, LayoutList, GitCompare,
   UserCheck, Layers3, Workflow,
+  ChevronLeft, ChevronRight, RotateCcw, Play, Pause, PenLine,
 } from "lucide-react";
 
 export const ICONS: Record<string, LucideIcon> = {
@@ -35,4 +36,6 @@ export const ICONS: Record<string, LucideIcon> = {
   "heart": Heart, "badge-check": BadgeCheck, "map": Map, "list-plus": ListPlus,
   "layout-list": LayoutList, "git-compare": GitCompare, "user-check": UserCheck,
   "layers-3": Layers3, "workflow": Workflow,
+  "chevron-left": ChevronLeft, "chevron-right": ChevronRight, "rotate-ccw": RotateCcw,
+  "play": Play, "pause": Pause, "pen-line": PenLine,
 };
