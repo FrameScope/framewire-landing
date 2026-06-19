@@ -8,6 +8,7 @@ import { LensExplorer } from "./components/site/LensExplorer";
 import { ToolsWorkspace } from "./components/site/ToolsWorkspace";
 import { AudienceExplorer } from "./components/site/AudienceExplorer";
 import { IngestionScene } from "./components/site/IngestionScene";
+import { SystemMap } from "./components/site/SystemMap";
 import { GuidedTour } from "./components/site/GuidedTour";
 import { LensConceptScene } from "./components/motion/scenes/LensConceptScene";
 import { ReportStudioScene } from "./components/motion/scenes/ReportStudioScene";
@@ -153,6 +154,12 @@ export default function CompleteHomepage() {
           lead="Completed investigations enter memory. When new evidence appears, earlier findings reconnect and understanding updates — without erasing what came before.">
           <MemoryScene />
           <p className="site-statement">A memory system for evidence-backed institutional understanding.</p>
+        </Section>
+
+        {/* ── Complete FrameWire system map ── */}
+        <Section id="system-map" eyebrow="The complete system" title="From fragmented information to evidence-linked intelligence." center
+          lead="See how FrameWire collects information, prepares evidence, applies connected intelligence lenses, supports human investigation, and produces verified outputs.">
+          <SystemMap />
         </Section>
 
         {/* ── Final recap ── */}
