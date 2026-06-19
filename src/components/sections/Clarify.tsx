@@ -9,7 +9,7 @@ const ANSWERS = [
   {
     icon: "help-circle",
     q: "What is FrameWire?",
-    a: "A governed intelligence and investigation operating system. It turns scattered information into traceable, evidence-backed investigations — with every source preserved.",
+    a: "A trusted intelligence and investigation workspace. It turns scattered information into traceable, evidence-backed investigations — with every source kept connected.",
   },
   {
     icon: "users",
@@ -24,7 +24,7 @@ const ANSWERS = [
   {
     icon: "lock",
     q: "How is my information handled?",
-    a: "Originals are archived with their source and provenance. Raw data stays non-canonical until it is cleaned and verified, and final conclusions stay under your control. A formal privacy policy will be published before general availability.",
+    a: "Originals are archived with their source and provenance. Raw data isn't treated as trusted until it is cleaned and verified, and final conclusions stay under your control. A formal privacy policy will be published before general availability.",
   },
   {
     icon: "languages",

@@ -4,12 +4,15 @@ import { Clarify } from "./components/sections/Clarify";
 import { HelpsYouDo } from "./components/sections/HelpsYouDo";
 import { Problem } from "./components/sections/Problem";
 import { Pipeline, Collect, ArchiveFirst, CleanVerify } from "./components/sections/Pipeline";
-import { Investigation, Understand, ExampleInvestigation } from "./components/sections/Investigation";
+import { Investigation, ExampleInvestigation } from "./components/sections/Investigation";
+import { IntelligenceLenses } from "./components/sections/IntelligenceLenses";
+import { ReportStudio } from "./components/sections/ReportStudio";
 import { Trust, Memory, UseCases, WhyDifferent } from "./components/sections/Trust";
 import { Language } from "./components/sections/Language";
 import { Beta, FinalCTA, Footer } from "./components/sections/Beta";
 import {
-  FlowSection, SegregationSection, RelationshipsSection, TimelineSection, LineageSection,
+  FlowSection, SegregationSection, ConnectedLensesSection,
+  RelationshipsSection, TimelineSection, LineageSection,
 } from "./components/sections/GraphSections";
 
 export default function App() {
@@ -22,14 +25,16 @@ export default function App() {
         <Clarify />
         <HelpsYouDo />
         <Problem />
-        <FlowSection />
         <Pipeline />
+        <FlowSection />
         <Collect />
         <ArchiveFirst />
         <SegregationSection />
         <CleanVerify />
         <Investigation />
-        <Understand />
+        <IntelligenceLenses />
+        <ConnectedLensesSection />
+        <ReportStudio />
         <RelationshipsSection />
         <ExampleInvestigation />
         <TimelineSection />

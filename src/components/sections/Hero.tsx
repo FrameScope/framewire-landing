@@ -3,7 +3,7 @@ import { Button } from "../ui/Button";
 import { Icon } from "../ui/Icon";
 import { Reveal } from "../ui/Reveal";
 import { Refrain } from "../ui/Refrain";
-import { BETA_MAILTO, LOGO } from "../../config";
+import { LOGO } from "../../config";
 
 const AUDIENCE = ["Journalists", "Researchers", "NGOs", "Analysts", "Risk & security teams", "Policy professionals"];
 
@@ -59,14 +59,13 @@ export function Hero() {
           </p>
         </Reveal>
         <Reveal delay={180}>
-          <p className="fw-body" style={{ color: "var(--fw-ink-3)", maxWidth: "44ch", margin: "0 auto" }}>
-            Collect widely. Preserve every source. Verify before analysis. Keep humans in control.
+          <p className="fw-body" style={{ color: "var(--fw-ink-3)", maxWidth: "46ch", margin: "0 auto" }}>
+            Explore broadly. Keep every source traceable. Review carefully. Stay in control.
           </p>
         </Reveal>
         <Reveal delay={220}>
           <div style={{ display: "flex", gap: 14, flexWrap: "wrap", justifyContent: "center", marginTop: 4 }}>
-            <Button variant="primary" size="lg" href={BETA_MAILTO} icon={<span>→</span>}>Join the Private Beta</Button>
-            <Button variant="secondary" size="lg" href="#how" onClick={(e) => scrollTo(e, "#how")}>See How FrameWire Works</Button>
+            <Button variant="primary" size="lg" href="#how" onClick={(e) => scrollTo(e, "#how")} icon={<span>↓</span>}>See How FrameWire Works</Button>
           </div>
         </Reveal>
         <Reveal delay={280} style={{ marginTop: 10 }}><Refrain>AI assists. Humans decide.</Refrain></Reveal>

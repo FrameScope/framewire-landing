@@ -1,12 +1,12 @@
 import { useEffect, useState, type MouseEvent } from "react";
-import { Button } from "../ui/Button";
 import { Icon } from "../ui/Icon";
 import { Wordmark } from "../ui/Wordmark";
-import { BETA_MAILTO, SIGNIN_URL } from "../../config";
+import { SIGNIN_URL } from "../../config";
 
 const NAV_LINKS = [
   { label: "How It Works", href: "#how" },
   { label: "Investigation", href: "#investigation" },
+  { label: "Lenses", href: "#lenses" },
   { label: "Trust", href: "#trust" },
   { label: "Use Cases", href: "#use-cases" },
   { label: "Private Beta", href: "#beta" },
@@ -36,7 +36,7 @@ export function Nav() {
           <Wordmark size={24} />
         </a>
 
-        <div className="fw-desk" style={{ display: "flex", alignItems: "center", gap: 30 }}>
+        <div className="fw-desk" style={{ display: "flex", alignItems: "center", gap: 26 }}>
           {NAV_LINKS.map((l) => (
             <a key={l.href} href={l.href} onClick={(e) => go(e, l.href)}
               style={{ fontSize: 14, color: "var(--fw-ink-2)", textDecoration: "none", letterSpacing: "-0.005em", transition: "color var(--motion-quick) var(--ease-calm)" }}
@@ -48,7 +48,6 @@ export function Nav() {
               onMouseEnter={(e) => (e.currentTarget.style.color = "var(--fw-ink)")}
               onMouseLeave={(e) => (e.currentTarget.style.color = "var(--fw-ink-2)")}>Sign In</a>
           )}
-          <Button variant="primary" size="sm" href={BETA_MAILTO}>Join Private Beta</Button>
         </div>
 
         <button className="fw-mobnav" aria-label={open ? "Close menu" : "Open menu"} aria-expanded={open} onClick={() => setOpen((o) => !o)}
@@ -66,9 +65,6 @@ export function Nav() {
           {SIGNIN_URL && (
             <a href={SIGNIN_URL} onClick={() => setOpen(false)} style={{ fontSize: 16, color: "var(--fw-ink-2)", textDecoration: "none", padding: "13px 4px", borderBottom: "1px solid var(--fw-line)" }}>Sign In</a>
           )}
-          <div style={{ marginTop: 16 }}>
-            <Button variant="primary" href={BETA_MAILTO} style={{ width: "100%" }}>Join Private Beta</Button>
-          </div>
         </div>
       )}
     </nav>

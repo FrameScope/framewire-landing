@@ -7,10 +7,10 @@ import { SectionHead } from "../ui/SectionHead";
 import { SourceCard } from "../ui/SourceCard";
 
 const PIPELINE = [
-  { i: "01", label: "Collect", icon: "search", gate: false, summary: "Search, scrape, upload, or connect providers — gather broadly at the edge.", detail: "Users have flexibility at the collection edge: RSS, websites, APIs, uploads and user-owned keys. Every source still enters the same governed pipeline." },
+  { i: "01", label: "Collect", icon: "search", gate: false, summary: "Search, scrape, upload, or connect providers — gather broadly at the edge.", detail: "You have flexibility at the collection edge: RSS, websites, APIs, uploads and user-owned keys. Every source still enters the same traceable workflow." },
   { i: "02", label: "Archive", icon: "database", gate: false, summary: "Every incoming item is preserved first — with its source, time, provider and hash.", detail: "Failed, quarantined, stale and duplicate material stays separated. Raw information does not become trusted intelligence automatically." },
   { i: "03", label: "Clean", icon: "wand-sparkles", gate: false, summary: "HTML, documents, OCR, tables, dates, names, entities and locations are normalized.", detail: "Cleaning makes material legible and comparable. Cleaning is not verification — it does not decide whether information is true." },
-  { i: "04", label: "Verify", icon: "shield-check", gate: true, summary: "Provenance, integrity, freshness, duplication, schema and context are checked.", detail: "Only verified material is eligible for analysis. Even authoritative sources require ingestion verification of the collected copy." },
+  { i: "04", label: "Verify", icon: "shield-check", gate: true, summary: "Provenance, integrity, freshness, duplication, schema and context are checked.", detail: "Only verified material moves on to analysis. Even authoritative sources need the collected copy checked before it is used." },
   { i: "05", label: "Investigate", icon: "git-branch", gate: false, summary: "Inspect evidence, timelines, actors, places, claims and the relationships between them.", detail: "Findings stay connected to the evidence that supports them, so any conclusion can be traced back to a source." },
   { i: "06", label: "Understand", icon: "scale", gate: false, summary: "Compare interpretations, convergence, confidence and remaining uncertainty.", detail: "Competing explanations are kept side by side. Uncertainty is preserved, not flattened into a single answer." },
   { i: "07", label: "Produce", icon: "file-text", gate: false, summary: "Create a traceable report with its evidence, reasons for confidence, and limitations.", detail: "Reports remain linked to original sources, so a reader can follow every claim back to where it came from." },
@@ -21,14 +21,14 @@ export function Pipeline() {
   return (
     <Section id="how">
       <SectionHead index="02" kicker="How FrameWire works" align="center"
-        title="From collection to report — one governed path."
+        title="From collection to report — one evidence-aware workflow."
         lead="Eight stages take fragmented input and turn it into evidence that a human can stand behind." />
 
       <Reveal delay={60}>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 12, flexWrap: "wrap", margin: "0 auto 40px", maxWidth: 760, padding: "16px 22px", borderRadius: "var(--radius-md)", border: "1px solid var(--fw-signal-edge)", background: "var(--fw-signal-wash)", textAlign: "center" }}>
           <Icon name="shield-check" size={18} color="var(--fw-signal)" />
           <span style={{ fontSize: "clamp(15px, 1.4vw, 17px)", fontWeight: 500, color: "var(--fw-ink)" }}>
-            Nothing reaches FrameWire&rsquo;s intelligence engines before cleaning and verification.
+            Nothing reaches FrameWire&rsquo;s intelligence lenses before cleaning and verification.
           </span>
         </div>
       </Reveal>
@@ -61,8 +61,8 @@ export function Collect() {
   return (
     <Section id="collect" band>
       <SectionHead index="03" kicker="Collect broadly"
-        title="Flexible at the edge. Governed everywhere after."
-        lead="FrameWire works with many kinds of source. Whatever the origin, every item enters the same pipeline." />
+        title="Flexible for people. Reliable underneath."
+        lead="FrameWire works with many kinds of source. Whatever the origin, every item enters the same traceable workflow." />
       <div className="fw-collect-grid" style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 12 }}>
         {COLLECT_SOURCES.map((s, i) => (
           <Reveal key={s.label} delay={Math.min(i * 40, 240)}>
@@ -78,7 +78,7 @@ export function Collect() {
       <Reveal delay={120}>
         <div style={{ display: "flex", alignItems: "center", gap: 11, marginTop: 26, fontSize: 14, color: "var(--fw-ink-3)" }}>
           <Icon name="git-merge" size={16} color="var(--fw-signal)" />
-          Users have flexibility at the collection edge — every source still enters the same governed pipeline.
+          Your workflow stays flexible at the collection edge — every source still enters the same traceable workflow.
         </div>
       </Reveal>
     </Section>
@@ -133,7 +133,7 @@ export function CleanVerify() {
     <Section id="verify" band>
       <SectionHead index="05" kicker="Clean and verify"
         title="Cleaning makes data legible. Verification decides if it can be used."
-        lead="FrameWire checks provenance, integrity, freshness, duplication, schema and context — before any engine sees the data." />
+        lead="FrameWire checks provenance, integrity, freshness, duplication, schema and context — before anything reaches analysis." />
 
       <div className="fw-cv-grid" style={{ display: "grid", gridTemplateColumns: "1.1fr 0.9fr", gap: "clamp(28px,4vw,56px)", alignItems: "start" }}>
         <Reveal>
@@ -155,7 +155,7 @@ export function CleanVerify() {
               </div>
               <div style={{ display: "flex", gap: 13, padding: "18px", background: "var(--fw-signal-wash)" }}>
                 <Icon name="shield-check" size={18} color="var(--fw-signal)" style={{ marginTop: 1, flexShrink: 0 }} />
-                <div><div style={{ fontSize: 14.5, fontWeight: 600, color: "var(--fw-ink)", marginBottom: 3 }}>FrameWire verifies its collected copy before engine use.</div>
+                <div><div style={{ fontSize: 14.5, fontWeight: 600, color: "var(--fw-ink)", marginBottom: 3 }}>FrameWire verifies its collected copy before it is used.</div>
                   <div style={{ fontSize: 13.5, color: "var(--fw-ink-2)", lineHeight: 1.5 }}>A trusted source is not enough — the ingested copy is checked too.</div></div>
               </div>
             </div>

@@ -6,7 +6,7 @@ const TL_POINTS = [
   { t: "Day 0 · 09:42", title: "First source collected", note: "The earliest item is captured and archived with its provenance.", icon: "download", tone: "archive" },
   { t: "Day 0 · 11:15", title: "Additional evidence discovered", note: "Related material is gathered and linked to the same subject.", icon: "search", tone: "ink" },
   { t: "Day 1", title: "Contradiction identified", note: "A later source conflicts with an earlier claim.", icon: "split", tone: "conflict" },
-  { t: "Day 1", title: "Verification status changed", note: "Re-checking provenance updates what is eligible for analysis.", icon: "shield-check", tone: "signal" },
+  { t: "Day 1", title: "Verification status changed", note: "Re-checking provenance updates what can move on to analysis.", icon: "shield-check", tone: "signal" },
   { t: "Day 2", title: "Finding created", note: "A finding is recorded, connected to its supporting evidence.", icon: "git-branch", tone: "ink" },
   { t: "Day 2", title: "Report produced", note: "A traceable report is generated with citations and limitations.", icon: "file-text", tone: "ink" },
   { t: "Day 6", title: "Correction recorded", note: "A later update is preserved — the history is never overwritten.", icon: "history", tone: "archive" },

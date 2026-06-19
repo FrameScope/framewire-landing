@@ -10,7 +10,8 @@ import {
   Info, Mail, Lock, Link, Archive, Newspaper, Microscope, HeartHandshake,
   Landmark, Shield, Vote, FileSearch, Globe2, Bell, MessageSquare, ArrowRight,
   Ban, MessageSquareText, BookOpen, FolderSearch, ClipboardCheck, MessagesSquare,
-  Users, Languages,
+  Users, Languages, Heart, BadgeCheck, Map, ListPlus, LayoutList, GitCompare,
+  UserCheck, Layers3, Workflow,
 } from "lucide-react";
 
 export const ICONS: Record<string, LucideIcon> = {
@@ -31,4 +32,7 @@ export const ICONS: Record<string, LucideIcon> = {
   "ban": Ban, "message-square-text": MessageSquareText, "book-open": BookOpen,
   "folder-search": FolderSearch, "clipboard-check": ClipboardCheck,
   "messages-square": MessagesSquare, "users": Users, "languages": Languages,
+  "heart": Heart, "badge-check": BadgeCheck, "map": Map, "list-plus": ListPlus,
+  "layout-list": LayoutList, "git-compare": GitCompare, "user-check": UserCheck,
+  "layers-3": Layers3, "workflow": Workflow,
 };

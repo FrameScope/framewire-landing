@@ -6,10 +6,10 @@ const SG_CHAIN = [
   { label: "Raw", icon: "download", tone: "ink" },
   { label: "Cleaned", icon: "wand-sparkles", tone: "ink" },
   { label: "Verified", icon: "shield-check", tone: "signal" },
-  { label: "Engine eligible", icon: "git-branch", tone: "signal" },
-  { label: "Canonical", icon: "database", tone: "archive" },
+  { label: "Ready for analysis", icon: "git-branch", tone: "signal" },
+  { label: "Approved knowledge", icon: "database", tone: "archive" },
 ];
-const SG_BLOCKED = ["Raw → Engine", "Quarantined → Engine", "Unverified → Canonical"];
+const SG_BLOCKED = ["Raw → Analysis", "Quarantined → Analysis", "Unverified → Approved"];
 
 export function SegregationGraph() {
   const [ref, inView] = useInView();
@@ -19,9 +19,9 @@ export function SegregationGraph() {
 
   return (
     <GraphFigure
-      title="Archive segregation"
-      label="permitted movement between states — and what is blocked"
-      desc="Material moves Raw, Cleaned, Verified, Engine-eligible, Canonical. Quarantined material is a dead end. Three transitions are always blocked: Raw to Engine, Quarantined to Engine, Unverified to Canonical."
+      title="How information is protected"
+      label="permitted movement between states — and what stays protected"
+      desc="Material moves Raw, Cleaned, Verified, Ready for analysis, Approved knowledge. Quarantined material is a dead end. Three moves are always blocked: Raw to Analysis, Quarantined to Analysis, Unverified to Approved."
     >
       <div ref={ref} data-active={active} className="fw-seg">
         <ol className="fw-seg-chain">
@@ -43,7 +43,7 @@ export function SegregationGraph() {
         </ol>
         <div className="fw-seg-quar" tabIndex={0} style={t(5)}>
           <Icon name="ban" size={14} color="var(--fw-caution)" />
-          <span>Quarantined material stays isolated — a dead end, never engine-eligible.</span>
+          <span>Quarantined material stays isolated — a dead end, never used in analysis.</span>
         </div>
         <div className="fw-seg-blocked" style={t(6)}>
           <span className="fw-seg-blocked-h">Always blocked</span>
@@ -54,8 +54,8 @@ export function SegregationGraph() {
           </div>
         </div>
         <div className="fw-seg-msgs">
-          <p>Collection does not equal verification.</p>
-          <p>Verification does not automatically equal canonical authority.</p>
+          <p>Collecting something does not make it verified.</p>
+          <p>Verifying something does not automatically make it trusted.</p>
         </div>
       </div>
     </GraphFigure>

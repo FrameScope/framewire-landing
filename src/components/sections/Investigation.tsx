@@ -21,7 +21,7 @@ export function Investigation() {
     <Section id="investigation">
       <SectionHead index="06" kicker="Investigation experience"
         title="A disciplined path from signal to understanding."
-        lead="The human workflow that runs on top of the governed pipeline — six moves, in order." />
+        lead="The human workflow that runs on top of the evidence-aware process — six moves, in order." />
       <div className="fw-exp-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 14 }}>
         {EXPERIENCE.map((e, i) => (
           <Reveal key={e.label} delay={Math.min(i * 60, 320)}>

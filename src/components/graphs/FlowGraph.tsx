@@ -25,8 +25,8 @@ export function FlowGraph() {
   return (
     <GraphFigure
       title="Source-to-understanding flow"
-      label="all sources enter the archive first · raw data cannot reach an engine"
-      desc="Six kinds of source all flow into the Archive first, then through Cleaning and Verification, which acts as a gate. Only verified material continues into Investigation, Understanding, Report and Memory. Raw or quarantined material cannot jump directly to an engine."
+      label="all sources enter the archive first · raw data cannot reach analysis"
+      desc="Six kinds of source all flow into the Archive first, then through Cleaning and Verification, which acts as a checkpoint. Only verified material continues into Investigation, Understanding, Report and Memory. Raw or quarantined material cannot jump directly into analysis."
       badge={<span className="fw-mono" style={{ fontSize: 10.5, color: "var(--fw-ink-4)" }}>scroll to trace</span>}
     >
       <div ref={ref} data-active={active} className="fw-flow">
@@ -61,7 +61,7 @@ export function FlowGraph() {
         </ol>
         <div className="fw-flow-legend">
           <span className="fw-flow-allow"><Icon name="shield-check" size={14} color="var(--fw-signal)" /> Verified information continues into investigation</span>
-          <span className="fw-flow-block"><Icon name="ban" size={14} color="var(--fw-conflict)" /> Raw &amp; quarantined material stops before the engines</span>
+          <span className="fw-flow-block"><Icon name="ban" size={14} color="var(--fw-conflict)" /> Raw &amp; quarantined material stops before analysis</span>
         </div>
       </div>
     </GraphFigure>

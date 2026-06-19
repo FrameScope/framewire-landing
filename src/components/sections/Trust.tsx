@@ -6,18 +6,18 @@ import { SectionHead } from "../ui/SectionHead";
 import { Wordmark } from "../ui/Wordmark";
 
 const CONSTITUTION = [
-  { t: "Open at the edge", d: "You can collect broadly — many sources, many formats." },
-  { t: "Strict at the core", d: "What becomes trusted intelligence is tightly governed." },
+  { t: "Flexible for people", d: "You can explore broadly — many sources, many formats." },
+  { t: "Reliable underneath", d: "What becomes trusted intelligence stays dependable and traceable." },
   { t: "Archive first", d: "Originals are preserved before anything is analysed." },
-  { t: "Clean and verify before engine", d: "No raw data reaches the engines unchecked." },
-  { t: "Governed promotion before canonical write", d: "Data becomes authoritative only through controlled steps." },
+  { t: "Clean and verify before analysis", d: "No raw material reaches analysis unchecked." },
+  { t: "Reviewed before it becomes trusted", d: "Information becomes approved knowledge only through clear, traceable steps." },
 ];
 
 const GOV_POINTS = [
-  "Raw data remains non-canonical until governed promotion.",
-  "No role can bypass the data pipeline.",
+  "Raw data isn't treated as trusted until it has been reviewed.",
+  "No role can skip the evidence workflow.",
   "Admin and Super Admin authority does not make uploaded data true.",
-  "Agents create traceable, recorded derived outputs.",
+  "AI assistance produces traceable, recorded results — never silent ones.",
   "Quarantined material remains isolated.",
   "Final conclusions remain under human control.",
 ];
@@ -33,12 +33,12 @@ export function Trust() {
     <Section id="trust">
       <SectionHead index="09" kicker="Trust and governance"
         title="Authority over people is not authority over data."
-        lead="FrameWire's discipline is structural. The rules apply to everyone — including the people who run it." />
+        lead="FrameWire's protections are built in. The same rules apply to everyone — including the people who run it." />
 
       <div className="fw-trust-grid" style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr) minmax(0,1fr)", gap: "clamp(28px,4vw,56px)", alignItems: "start" }}>
         <Reveal>
           <div>
-            <div className="fw-mono" style={{ fontSize: 11, textTransform: "uppercase", letterSpacing: "0.12em", color: "var(--fw-ink-4)", marginBottom: 16 }}>The FrameWire constitution</div>
+            <div className="fw-mono" style={{ fontSize: 11, textTransform: "uppercase", letterSpacing: "0.12em", color: "var(--fw-ink-4)", marginBottom: 16 }}>How FrameWire stays reliable</div>
             <div style={{ display: "flex", flexDirection: "column", gap: 1, border: "1px solid var(--fw-line-strong)", borderRadius: "var(--radius-md)", overflow: "hidden", background: "var(--fw-surface)" }}>
               {CONSTITUTION.map((c, i) => (
                 <div key={c.t} style={{ padding: "16px 18px", borderBottom: i < CONSTITUTION.length - 1 ? "1px solid var(--fw-line)" : 0, display: "flex", gap: 13 }}>
