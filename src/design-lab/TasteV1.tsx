@@ -33,6 +33,7 @@ import { Button } from "../components/ui/Button";
 import { BETA_MAILTO, CONTACT_MAILTO } from "../config";
 import FrameWireTour from "./FrameWireTour";
 import { LensIcon, type LensIconKind } from "./LensIcons";
+import WhyFrameWire from "./WhyFrameWire";
 import {
   audiences,
   evidenceStates,
@@ -633,6 +634,7 @@ export default function TasteV1() {
         </section>
 
         <FrameWireTour activeStage={tourStage} onStageChange={setTourStage} onDefinitionNavigate={navigateToDefinition} />
+        <WhyFrameWire />
 
         <section className="taste-problem" id="taste-method">
           <div className="taste-chapter-intro" data-taste-reveal><p className="taste-kicker">Why FrameWire exists</p><h2>Information arrives fast. Understanding does not.</h2></div>
