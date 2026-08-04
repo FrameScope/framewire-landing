@@ -177,7 +177,7 @@ function SourceSurvives() {
   const stages = ["Canonical Archive", "Working Copy", "Analytical Observations", "Human-Reviewed Finding"];
 
   return (
-    <div className="taste-why-source-layout" id="why-source-survives">
+    <div className="taste-why-source-layout taste-story-stage" id="why-source-survives">
       <div className="taste-why-source-copy" data-taste-reveal>
         <SectionLabel>Archive first</SectionLabel>
         <h3>The analysis may change. The evidence should remain inspectable.</h3>
@@ -232,7 +232,7 @@ function ConfidenceAndHuman() {
         <div className="taste-why-confidence-axis"><span>Confident language</span><i aria-hidden="true" /><span>Evidence support</span></div>
         <div className="taste-why-confidence-states">{confidenceStates.map((state) => { const Icon = state.icon; return <article className={state.className} key={state.name}><Icon size={18} /><strong>{state.name}</strong><p>{state.detail}</p></article>; })}</div>
       </div>
-      <div className="taste-why-human" id="why-human-authority" data-taste-reveal>
+      <div className="taste-why-human taste-story-stage" id="why-human-authority" data-taste-reveal>
         <div><SectionLabel>Why the human remains essential</SectionLabel><h3>You are not the final obstacle in the workflow. You are the final authority.</h3><p>Context, responsibility and consequence belong to the human investigator.</p></div>
         <div className="taste-why-human-console">
           <header><UserCheck size={22} /><span>Investigator context</span><strong>HUMAN REVIEW</strong></header>
@@ -249,7 +249,7 @@ function HumanVerification() {
   const action = reviewActions[selected];
 
   return (
-    <div className="taste-why-verification" id="why-human-verification" data-taste-reveal>
+    <div className="taste-why-verification taste-story-stage" id="why-human-verification" data-taste-reveal>
       <div className="taste-why-verification-heading"><SectionLabel>Human verification is real work</SectionLabel><h3>Human verification is not a ceremonial approval button.</h3><p>It is where the investigator decides whether the evidence supports the language, weight and consequence of a finding.</p></div>
       <div className="taste-why-review-workspace">
         <article className="taste-why-machine-observation"><span>Machine observation</span><h4>Public sources appear to support one account.</h4><div><small><Quote size={13} /> Exact evidence</small><small><Fingerprint size={13} /> Source provenance</small><small><CheckCircle2 size={13} /> Supporting material</small><small><XCircle size={13} /> Contradicting material</small><small><CircleAlert size={13} /> Coverage limitations</small><small><GitCompareArrows size={13} /> Alternative interpretation</small></div></article>
@@ -318,7 +318,7 @@ function Philosophy() {
 export default function WhyFrameWire() {
   return (
     <section className="taste-why" id="why-framewire" aria-labelledby="why-framewire-title">
-      <header className="taste-why-opening" data-taste-reveal>
+      <header className="taste-why-opening taste-story-stage" data-taste-reveal>
         <div><SectionLabel>Why FrameWire</SectionLabel><h2 id="why-framewire-title">Intelligence should strengthen judgment—not replace it.</h2></div>
         <div><p>FrameWire preserves evidence, organises competing perspectives and helps a human understand what the available material can responsibly support.</p><strong>AI assists. Evidence remains visible. Humans decide.</strong><small>Illustrative product demonstration.</small></div>
       </header>

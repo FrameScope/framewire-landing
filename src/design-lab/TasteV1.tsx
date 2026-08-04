@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState, type KeyboardEvent, type ReactNode } from "react";
+import { useCallback, useEffect, useRef, useState, type KeyboardEvent, type ReactNode } from "react";
 import {
   ArrowDownRight,
   ArrowRight,
@@ -383,9 +383,30 @@ function LensGraphic({ kind }: { kind: LensIconKind }) {
 
 function LensSystem({ selected, setSelected }: { selected: number; setSelected: (index: number) => void }) {
   const lens = lenses[selected];
+  const detailRef = useRef<HTMLElement>(null);
+  const reducedMotion = useReducedMotion();
+
+  const selectLens = useCallback((index: number) => {
+    setSelected(index);
+
+    window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(() => {
+        const detail = detailRef.current;
+        if (!detail || !window.matchMedia("(min-width: 821px)").matches) return;
+
+        const rect = detail.getBoundingClientRect();
+        const visibleDetailThreshold = window.innerHeight - Math.min(112, window.innerHeight * 0.16);
+        if (rect.top <= visibleDetailThreshold && rect.bottom >= 0) return;
+
+        const restrainedTop = window.innerHeight - Math.min(220, window.innerHeight * 0.29);
+        const destination = Math.max(0, window.scrollY + rect.top - restrainedTop);
+        window.scrollTo({ top: destination, behavior: reducedMotion ? "auto" : "smooth" });
+      });
+    });
+  }, [reducedMotion, setSelected]);
 
   return (
-    <section className="taste-lenses" id="intelligence-lenses" tabIndex={-1}>
+    <section className="taste-lenses taste-story-stage" id="intelligence-lenses" tabIndex={-1}>
       <SectionHead eyebrow="Complete intelligence-lens system" title="Independent lenses. Shared evidence. No hidden master score." lead="Choose a lens to inspect its question, evidence boundary, outputs, relationships and refusal conditions." />
       <div className="taste-lens-matrix" role="group" aria-label="Principal intelligence lenses">
         {lenses.map((item, index) => {
@@ -397,8 +418,8 @@ function LensSystem({ selected, setSelected }: { selected: number; setSelected: 
               data-testid={`lens-${index}`}
               aria-pressed={selected === index}
               aria-controls="taste-lens-detail"
-              onClick={() => setSelected(index)}
-              onKeyDown={(event) => activateOnKey(event, () => setSelected(index))}
+              onClick={() => selectLens(index)}
+              onKeyDown={(event) => activateOnKey(event, () => selectLens(index))}
             >
               <div className="taste-lens-top"><span className="taste-lens-abbreviation">{item.abbreviation}</span><span>{String(index + 1).padStart(2, "0")}</span></div>
               <LensGraphic kind={item.icon} />
@@ -407,7 +428,7 @@ function LensSystem({ selected, setSelected }: { selected: number; setSelected: 
           );
         })}
       </div>
-      <article className={`taste-lens-detail ${lens.accent}`} id="taste-lens-detail" aria-live="polite" key={lens.name} data-testid="lens-detail">
+      <article ref={detailRef} className={`taste-lens-detail ${lens.accent}`} id="taste-lens-detail" aria-live="polite" key={lens.name} data-testid="lens-detail">
         <div className="taste-lens-detail-title"><LensIcon kind={lens.icon} size={52} strokeWidth={1.55} aria-hidden="true" /><div><span>SELECTED LENS</span><h3 id={lensDefinitionTargets[selected]} tabIndex={-1}>{lens.name}</h3></div></div>
         <div className="taste-lens-question"><span>Question answered</span><p>{lens.question}</p></div>
         <div className="taste-lens-detail-grid">
@@ -427,7 +448,7 @@ function CrossLens() {
   const active = lenses[cycle.index];
 
   return (
-    <section className="taste-cross-lens" id="cross-lens-context" tabIndex={-1}>
+    <section className="taste-cross-lens taste-story-stage" id="cross-lens-context" tabIndex={-1}>
       <SectionHead eyebrow="Cross-lens contextual intelligence" title="Compare observations without collapsing them." lead="A preserved record can be viewed through several independent lenses, then recombined into a structured investigation view. No lens can overwrite another." />
       <div className="taste-cross-canvas" data-taste-reveal>
         <div className="taste-cross-source"><FileText size={25} /><span>Preserved evidence</span><strong>DEMO-EVIDENCE-001</strong></div>
@@ -456,9 +477,31 @@ function AudienceWalkthroughs() {
   const [selected, setSelected] = useState(0);
   const audience = audiences[selected];
   const Icon = audience.icon;
+  const detailRef = useRef<HTMLElement>(null);
+  const reducedMotion = useReducedMotion();
+
+  const selectAudience = useCallback((index: number) => {
+    setSelected(index);
+
+    window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(() => {
+        const detail = detailRef.current;
+        if (!detail || !window.matchMedia("(min-width: 821px)").matches) return;
+
+        const rect = detail.getBoundingClientRect();
+        const safeTop = 96;
+        const visibleDetailThreshold = window.innerHeight - Math.min(112, window.innerHeight * 0.16);
+        if (rect.top >= safeTop && rect.top <= visibleDetailThreshold) return;
+
+        const viewportTarget = rect.top < safeTop ? safeTop : window.innerHeight - Math.min(220, window.innerHeight * 0.29);
+        const destination = Math.max(0, window.scrollY + rect.top - viewportTarget);
+        window.scrollTo({ top: destination, behavior: reducedMotion ? "auto" : "smooth" });
+      });
+    });
+  }, [reducedMotion]);
 
   const detail = (mobile = false) => (
-    <article className={mobile ? "taste-audience-detail taste-audience-mobile" : "taste-audience-detail"} aria-live="polite" key={`${audience.name}-${mobile ? "mobile" : "desktop"}`} data-testid={mobile ? "audience-mobile-detail" : "audience-detail"}>
+    <article ref={mobile ? undefined : detailRef} className={mobile ? "taste-audience-detail taste-audience-mobile" : "taste-audience-detail"} aria-live="polite" key={`${audience.name}-${mobile ? "mobile" : "desktop"}`} data-testid={mobile ? "audience-mobile-detail" : "audience-detail"}>
       <div className="taste-audience-title"><Icon size={30} strokeWidth={1.3} /><div><span>SELECTED WALKTHROUGH</span><h3>{audience.name}</h3></div></div>
       <div className="taste-audience-question"><span>Practical question</span><p>{audience.question}</p></div>
       <dl>
@@ -482,7 +525,7 @@ function AudienceWalkthroughs() {
             const ItemIcon = item.icon;
             return (
               <div className="taste-user-row-wrap" key={item.name}>
-                <button type="button" className={`taste-user-item ${selected === index ? "active" : ""}`} data-testid={`audience-${index}`} aria-pressed={selected === index} onClick={() => setSelected(index)} onKeyDown={(event) => activateOnKey(event, () => setSelected(index))}>
+                <button type="button" className={`taste-user-item ${selected === index ? "active" : ""}`} data-testid={`audience-${index}`} aria-pressed={selected === index} onClick={() => selectAudience(index)} onKeyDown={(event) => activateOnKey(event, () => selectAudience(index))}>
                   <span>{String(index + 1).padStart(2, "0")}</span><ItemIcon size={18} /><strong>{item.name}</strong><ArrowRight size={18} />
                 </button>
                 {selected === index && detail(true)}
@@ -528,7 +571,7 @@ function ReportingAndExports() {
   const active = reportAssembly[cycle.index];
 
   return (
-    <section className="taste-reporting" id="taste-reporting">
+    <section className="taste-reporting taste-story-stage" id="taste-reporting">
       <SectionHead eyebrow="Report, export and analytics" title="Findings leave the investigation under governance." lead="Report Studio keeps evidence, contradiction, limitation and human annotation attached. Exports and analytics remain non-canonical derivatives." />
       <div className="taste-report-grid" data-taste-reveal>
         <article className="taste-report-studio" id="taste-report-studio">
@@ -548,7 +591,7 @@ function ReportingAndExports() {
 
 function Memory() {
   return (
-    <section className="taste-memory" id="shared-intelligence-memory" tabIndex={-1}>
+    <section className="taste-memory taste-story-stage" id="shared-intelligence-memory" tabIndex={-1}>
       <SectionHead eyebrow="Shared intelligence memory" title="Historical context remains available, not automatically current." lead="Reviewed investigations preserve continuity across evidence, entities, narrative families, sources, locations, findings and reports." />
       <div className="taste-memory-map" data-taste-reveal>
         {memoryNodes.map((node, index) => <div key={node} className={index === 0 || index === memoryNodes.length - 1 ? "anchor" : ""}><span>{String(index + 1).padStart(2, "0")}</span><strong>{node}</strong>{index < memoryNodes.length - 1 && <ArrowRight size={16} />}</div>)}
@@ -621,7 +664,7 @@ export default function TasteV1() {
       </header>
 
       <main id="taste-main">
-        <section className="taste-hero">
+        <section className="taste-hero taste-story-stage">
           <div className="taste-hero-signal" aria-hidden="true"><span>EN / ने / हिं</span><span>PUBLIC INFORMATION</span><span>PRESERVED EVIDENCE</span></div>
           <div className="taste-hero-copy taste-visible" data-taste-reveal>
             <p className="taste-eyebrow"><CircleDot size={14} /> Human-centred contextual intelligence</p>
@@ -660,7 +703,7 @@ export default function TasteV1() {
         <Memory />
         <WorkspaceControlsPreview />
 
-        <section className="taste-final-cta" id="taste-beta">
+        <section className="taste-final-cta taste-story-stage" id="taste-beta">
           <div data-taste-reveal><p className="taste-kicker">FrameWire private beta</p><h2>Preserve the record. Examine the context. Decide with evidence.</h2><p>Designed for journalists, researchers, NGOs, government, political teams, security analysts, diplomats and general investigators who remain accountable for what they conclude.</p><div className="taste-actions"><Button variant="primary" size="lg" href={BETA_MAILTO} icon={<ArrowRight size={18} />}>Request beta access</Button><Button variant="secondary" size="lg" href={CONTACT_MAILTO} icon={<ArrowRight size={18} />}>Contact FrameWire</Button></div></div>
           <div className="taste-final-doctrine" aria-label="FrameWire doctrine"><ShieldCheck size={28} /><span>Investigation infrastructure, not a chatbot.</span><span>No automatic answer.</span><span>No automatic persuasion.</span><span>No automatic conclusion.</span></div>
         </section>

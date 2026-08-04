@@ -408,7 +408,7 @@ export default function FrameWireTour({ activeStage, onStageChange, onDefinition
   };
 
   return (
-    <section className={"taste-tour taste-film-tour tone-" + stage.tone} id="framewire-tour" tabIndex={-1} aria-labelledby="framewire-tour-title">
+    <section className={"taste-tour taste-film-tour taste-story-stage tone-" + stage.tone} id="framewire-tour" tabIndex={-1} aria-labelledby="framewire-tour-title">
       <div className="taste-tour-header">
         <div>
           <p className="taste-kicker">Guided FrameWire tour</p>

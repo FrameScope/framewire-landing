@@ -16,7 +16,21 @@
   --taste-gutter-total: clamp(2rem, 5vw, 3rem);
   --taste-content-max: 88rem;
   --taste-wide-max: 92rem;
-  --taste-section-space: clamp(6.25rem, 8vw, 8.5rem);
+  --taste-header-height: clamp(4.25rem, 6.8vw, 4.8rem);
+  --taste-stage-height: calc(100vh - var(--taste-header-height));
+  --taste-stage-height: calc(100dvh - var(--taste-header-height));
+  --space-section-compact: clamp(3.5rem, 4vw, 4.25rem);
+  --space-section-normal: clamp(4.5rem, 5vw, 5.25rem);
+  --space-section-large: clamp(5.25rem, 6vw, 6.25rem);
+  --space-content-gap: clamp(1.75rem, 2.6vw, 2.75rem);
+  --space-card-gap: clamp(.65rem, 1vw, 1rem);
+  --space-panel-gap: clamp(.85rem, 1.4vw, 1.25rem);
+  --type-display: clamp(3.25rem, 5.8vw, 5.8rem);
+  --type-chapter: clamp(2.65rem, 4vw, 4.1rem);
+  --type-section: clamp(2.2rem, 3.2vw, 3.35rem);
+  --type-card: clamp(1rem, 1.25vw, 1.2rem);
+  --type-meta: .68rem;
+  --taste-section-space: var(--space-section-normal);
   min-height: 100vh;
   overflow-x: clip;
   color: var(--taste-ink);
@@ -178,19 +192,19 @@
 .taste-archive-capabilities p { margin: 0; color: var(--taste-muted); font-size: .78rem; line-height: 1.58; }
 
 .taste-lens-matrix { display: grid; grid-template-columns: repeat(5, 1fr); border-top: 1px solid var(--taste-line); border-left: 1px solid var(--taste-line); }
-.taste-lens-item { min-width: 0; min-height: clamp(15rem, 20vw, 17rem); padding: 1.2rem; color: var(--taste-ink); text-align: left; border: 0; border-right: 1px solid var(--taste-line); border-bottom: 1px solid var(--taste-line); background: rgba(255,255,255,.012); cursor: pointer; transition: transform .25s ease, background .25s ease, color .25s ease; }
+.taste-lens-item { min-width: 0; min-height: clamp(11.75rem, 15.5vw, 13rem); padding: .9rem 1rem 1rem; color: var(--taste-ink); text-align: left; border: 0; border-right: 1px solid var(--taste-line); border-bottom: 1px solid var(--taste-line); background: rgba(255,255,255,.012); cursor: pointer; transition: transform .25s ease, background .25s ease, color .25s ease; }
 .taste-lens-item:hover, .taste-lens-item.active { transform: translateY(-3px); background: rgba(85,215,229,.055); }
 .taste-lens-item.active { box-shadow: inset 0 2px currentColor; }
 .taste-lens-item.cyan { color: var(--taste-cyan); } .taste-lens-item.amber { color: var(--taste-amber); } .taste-lens-item.green { color: var(--taste-green); } .taste-lens-item.violet { color: var(--taste-violet); }
 .taste-lens-top { display: flex; justify-content: space-between; align-items: center; }
 .taste-lens-top span { color: var(--taste-dim); font: .66rem/1 var(--taste-mono); }
 .taste-lens-top .taste-lens-abbreviation { color: #5575f6; font-size: .92rem; letter-spacing: .06em; }
-.taste-lens-graphic { height: 7rem; margin: 1.15rem 0 1.35rem; display: flex; align-items: center; justify-content: center; opacity: .9; }
-.taste-lens-graphic .taste-lens-icon { width: 6.8rem; height: 6.8rem; filter: drop-shadow(0 0 12px rgba(85,215,229,.07)); transition: transform .45s ease, opacity .3s ease; }
+.taste-lens-graphic { height: 5.6rem; margin: .65rem 0 .75rem; display: flex; align-items: center; justify-content: center; opacity: .9; }
+.taste-lens-graphic .taste-lens-icon { width: 5.85rem; height: 5.85rem; filter: drop-shadow(0 0 12px rgba(85,215,229,.07)); transition: transform .45s ease, opacity .3s ease; }
 .taste-lens-item:hover .taste-lens-icon, .taste-lens-item.active .taste-lens-icon { transform: scale(1.035); opacity: 1; }
-.taste-lens-item h3 { margin: 0 0 .55rem; color: var(--taste-ink); font-size: 1.05rem; font-weight: 540; }
+.taste-lens-item h3 { margin: 0 0 .42rem; color: var(--taste-ink); font-size: 1.05rem; font-weight: 540; }
 .taste-lens-item p { margin: 0; color: var(--taste-muted); font-size: .76rem; line-height: 1.5; }
-.taste-lens-detail { margin-top: 1.2rem; padding: 2.1rem; display: grid; grid-template-columns: .6fr 1.4fr; gap: 2rem 3rem; border: 1px solid var(--taste-line); background: linear-gradient(145deg, rgba(17,26,30,.94), rgba(8,13,15,.94)); animation: taste-fade .35s ease both; }
+.taste-lens-detail { margin-top: .75rem; padding: 2.1rem; display: grid; grid-template-columns: .6fr 1.4fr; gap: 2rem 3rem; border: 1px solid var(--taste-line); background: linear-gradient(145deg, rgba(17,26,30,.94), rgba(8,13,15,.94)); animation: taste-fade .35s ease both; }
 .taste-lens-detail.cyan { --lens: var(--taste-cyan); } .taste-lens-detail.amber { --lens: var(--taste-amber); } .taste-lens-detail.green { --lens: var(--taste-green); } .taste-lens-detail.violet { --lens: var(--taste-violet); }
 .taste-lens-detail-title { display: flex; gap: 1rem; color: var(--lens); }
 .taste-lens-detail-title .taste-lens-icon { flex: 0 0 auto; }
@@ -864,7 +878,7 @@
   .taste-film-memory { grid-template-columns: 1fr 3rem .72fr 3rem .8fr; }
 }
 
-@media (min-width: 821px) and (max-height: 820px) {
+@media (min-width: 821px) and (max-height: 950px) {
   .taste-lab { --taste-section-space: 5.5rem; }
   .taste-hero { padding-top: 2.25rem; padding-bottom: 2.35rem; }
   .taste-hero-signal { margin-bottom: 1.8rem; }
@@ -1291,6 +1305,281 @@
   .taste-why-manifesto { grid-template-columns: 1fr; gap: 3rem; }
   .taste-why-philosophy blockquote { margin: 4rem 0; text-align: left; }
   .taste-why-doctrine { grid-template-columns: 1fr 1fr; }.taste-why-doctrine span { min-height: 6.5rem; }
+}
+
+/* Shared whole-page density and vertical rhythm */
+.taste-nav {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 50;
+  height: var(--taste-header-height);
+  min-height: var(--taste-header-height);
+  background: rgba(7, 11, 13, .9);
+  backdrop-filter: blur(18px);
+}
+.taste-lab > main { padding-top: var(--taste-header-height); }
+.taste-story-stage {
+  min-height: var(--taste-stage-height);
+}
+.taste-hero,
+.taste-lenses,
+.taste-cross-lens,
+.taste-reporting,
+.taste-memory,
+.taste-final-cta,
+.taste-why-opening,
+.taste-why-source-layout,
+.taste-why-human,
+.taste-why-verification {
+  align-content: center;
+}
+.taste-hero, .taste-lenses, .taste-cross-lens, .taste-reporting, .taste-memory, .taste-final-cta { display: grid; }
+.taste-hero > *, .taste-hero-copy { min-width: 0; }
+.taste-lab [id] { scroll-margin-top: calc(var(--taste-header-height) + 1rem); }
+.taste-hero { padding-block: clamp(2.1rem, 3vw, 3rem); }
+.taste-hero h1 { font-size: var(--type-display); }
+.taste-system-map { margin-top: var(--space-content-gap); }
+.taste-system-rail > button { min-height: 8.5rem; padding: .85rem .75rem; gap: .75rem; }
+.taste-system-readout { padding: 1.1rem; }
+.taste-system-readout p { margin-bottom: 1.25rem; }
+.taste-doctrine-strip { margin-top: 1rem; padding-top: .9rem; }
+
+.taste-section-head { margin-bottom: var(--space-content-gap); padding-bottom: clamp(1.35rem, 2vw, 2rem); }
+.taste-section-head h2, .taste-chapter-intro h2, .taste-archive-title h2, .taste-final-cta h2 { font-size: var(--type-section); }
+.taste-chapter-intro { padding-bottom: var(--space-content-gap); }
+.taste-problem-grid { gap: var(--space-content-gap); padding-top: var(--space-content-gap); }
+.taste-problem-row { margin-bottom: 1.25rem; padding-bottom: 1.25rem; }
+
+.taste-stage-tabs button { min-height: 7rem; padding: 1rem; }
+.taste-stage-panel { min-height: clamp(21rem, 26vw, 23rem); padding: var(--space-panel-gap); gap: var(--space-panel-gap); }
+.taste-explorer-shell { min-height: 30rem; }
+.taste-sidebar-brand { min-height: 4.7rem; }
+.taste-explorer-row > button { min-height: 4.3rem; padding: .8rem 1rem; }
+.taste-explorer-heading h3 { font-size: var(--type-section); }
+.taste-public-journey div { min-height: 5rem; }
+.taste-life-track button { min-height: 5.4rem; }
+.taste-life-readout { min-height: 9.5rem; padding: 1rem; }
+.taste-archive-capabilities article { min-height: 7.5rem; padding: 1rem; }
+
+.taste-cross-canvas { gap: var(--space-card-gap); padding: 1rem; }
+.taste-cross-spine { min-height: 18rem; }
+.taste-context-rules { gap: var(--space-content-gap); padding: 1.5rem 0; }
+.taste-user-item { min-height: 4.25rem; }
+.taste-audience-detail { padding: 1.5rem; }
+.taste-audience-question { margin: 1.25rem 0; padding: 1rem; }
+.taste-audience-result { margin-top: 1rem; }
+
+.taste-workbench-top { padding: 1rem; }
+.taste-workbench-body { min-height: clamp(20rem, 25vw, 22rem); }
+.taste-workbench-panel { padding: 1.5rem; }
+.taste-workbench-panel ul { margin-top: 1.25rem; }
+.taste-workbench-panel li { min-height: 3.4rem; }
+.taste-report-studio, .taste-export-panel, .taste-analytics-panel { padding: 1.25rem; }
+.taste-assembly-track { margin-top: 1.4rem; }
+.taste-assembly-track button { min-height: 5.2rem; }
+.taste-assembly-detail { min-height: 7.5rem; padding: 1rem; }
+.taste-memory-map > div { min-height: 7rem; }
+.taste-memory-principles { gap: var(--space-content-gap); margin-top: var(--space-content-gap); }
+.taste-workspace-controls { gap: clamp(2.5rem, 5vw, 5rem); }
+.taste-workspace-controls-intro h2 { font-size: var(--type-section); }
+.taste-control-preview-grid article { min-height: clamp(15.5rem, 19vw, 18rem); padding: 1.25rem; }
+.taste-control-preview-grid span { margin-top: 1.4rem; }
+.taste-final-cta { padding-block: var(--space-section-compact); }
+.taste-final-doctrine { margin-top: 2.5rem; }
+.taste-footer { min-height: clamp(5rem, 6vw, 6rem); }
+
+.taste-tour { padding-block: clamp(1rem, 3dvh, 2rem); }
+.taste-tour-header { gap: var(--space-content-gap); padding-bottom: var(--space-content-gap); }
+.taste-tour-header h2, .taste-film-tour .taste-tour-header h2 { font-size: var(--type-chapter); }
+.taste-tour-case { margin-top: var(--space-panel-gap); padding: .85rem 1rem; }
+.taste-film-progress { margin: 1rem 0 .75rem; }
+.taste-film-step-dots { grid-template-columns: repeat(10, 2rem); }
+.taste-film-step-dots button { width: 2rem; height: 2rem; }
+.taste-film-stage-head { min-height: 3rem; }
+.taste-film-scene { min-height: clamp(18rem, 38dvh, 22rem); padding: 1.35rem; }
+.taste-film-narrative { min-height: clamp(5.25rem, 10dvh, 6.5rem); padding: 1.15rem; gap: var(--space-content-gap); }
+.taste-film-narrative h3 { font-size: clamp(1.55rem, 2.15vw, 2.6rem); }
+.taste-film-sources { min-height: 22rem; padding-block: 1rem; }
+.taste-film-source-field { height: clamp(19rem, 22vw, 21rem); }
+.taste-film-source-card { min-height: 6.2rem; }
+.taste-film-ingest-gateway { min-height: 12.5rem; }
+.taste-film-archive-vault { min-height: 18rem; }
+.taste-film-prepare { gap: var(--space-content-gap); }
+.taste-film-lens-modules button { min-height: 6.4rem; }
+.taste-film-returning-observations span { min-height: 4rem; }
+.taste-film-compare-flow { height: 9rem; }
+.taste-film-comparison-surface { min-height: 19rem; }
+.taste-film-workspace-document { min-height: 16rem; }
+.taste-film-review-gate { min-height: 14rem; }
+.taste-film-review-outcomes article { min-height: 6.5rem; }
+.taste-film-report-document { min-height: 23rem; }
+.taste-film-citation-lines { height: 14rem; }
+.taste-film-memory-report, .taste-film-future-investigation { min-height: 12rem; }
+.taste-tour-controls { margin-top: .75rem; padding: .4rem; }
+
+.taste-why { --taste-why-gap: var(--space-section-normal); padding: var(--space-section-large) 0 var(--space-section-normal); }
+.taste-why-opening { gap: var(--space-content-gap); padding-bottom: var(--space-content-gap); }
+.taste-why-opening h2 { font-size: var(--type-chapter); }
+.taste-why-opening > div:last-child strong { margin-top: 1.25rem; padding-top: 1rem; }
+.taste-why-authority { margin-top: var(--space-section-compact); }
+.taste-why-authority-streams article { padding: var(--space-panel-gap); }
+.taste-why-authority-streams article > div { margin-top: 1.5rem; gap: .55rem; }
+.taste-why-authority-report { min-height: 7rem; padding: 1.25rem 1.5rem; }
+.taste-why-authority-action { padding: 1rem 1.5rem; }
+.taste-why-editorial { margin: var(--taste-why-gap) 0 var(--space-content-gap); grid-template-columns: minmax(8rem, .28fr) minmax(0, 1.72fr); gap: 1rem var(--space-content-gap); }
+.taste-why-editorial h3 { font-size: var(--type-section); }
+.taste-why-editorial > p:last-child { margin-top: .65rem; }
+.taste-why-monitoring > article { padding: var(--space-panel-gap); }
+.taste-why-signal-field { margin-top: 1.75rem; }
+.taste-why-monitor-surface { min-height: 8rem; margin-top: 1.25rem; padding: 1rem; }
+.taste-why-investigation-items, .taste-why-stage-questions { margin-top: 1.4rem; }
+.taste-why-source-layout { grid-template-columns: minmax(22rem, .82fr) minmax(0, 1.18fr); gap: var(--space-content-gap); }
+.taste-why-source-copy h3 { font-size: var(--type-section); }
+.taste-why-source-copy > p { margin-bottom: 1.25rem; }
+.taste-why-original { margin: 1rem; padding: 1rem; }
+.taste-why-original p { margin-top: 1.2rem; }
+.taste-why-original .source-lines { margin-top: 1rem; }
+.taste-why-source-chain > div { min-height: 6.5rem; padding: .8rem; }
+.taste-why-ai-grid { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); }
+.taste-why-ai-grid > article { padding: var(--space-content-gap); }
+.taste-why-ai-grid h3 { font-size: var(--type-section); }
+.taste-why-ai-capabilities > div, .taste-why-polished-answer { margin-top: 1.3rem; }
+.taste-why-ai-capabilities > div span { min-height: 3.5rem; }
+.taste-why-hidden-problem { min-height: 6.5rem; padding: 1rem; }
+.taste-why-confidence { padding: var(--space-content-gap); grid-template-columns: minmax(22rem, .85fr) minmax(0, 1.15fr); gap: var(--space-content-gap); }
+.taste-why-confidence-copy h3 { font-size: var(--type-section); }
+.taste-why-confidence-states article { padding: 1rem; }
+.taste-why-confidence-states article svg { margin-bottom: .8rem; }
+.taste-why-human { grid-template-columns: minmax(24rem, .9fr) minmax(0, 1.1fr); gap: var(--space-content-gap); }
+.taste-why-human > div:first-child h3 { font-size: clamp(2.4rem, 3.3vw, 3.6rem); }
+.taste-why-human-console > div span { min-height: 4.25rem; padding: .8rem; }
+.taste-why-verification { padding-top: var(--space-content-gap); }
+.taste-why-verification-heading { grid-template-columns: minmax(8rem, .25fr) minmax(30rem, 1.45fr) minmax(15rem, .55fr); gap: var(--space-content-gap); margin-bottom: var(--space-content-gap); }
+.taste-why-verification-heading h3 { font-size: var(--type-section); }
+.taste-why-machine-observation, .taste-why-review-outcome { padding: 1.25rem; }
+.taste-why-machine-observation h4 { margin: .9rem 0 1.25rem; }
+.taste-why-review-actions button { min-height: 4.1rem; }
+.taste-why-review-outcome > svg { margin-bottom: 1.25rem; }
+.taste-why-review-outcome small { padding-top: 1rem; }
+.taste-why-record-heading { grid-template-columns: minmax(8rem, .25fr) minmax(0, 1.75fr); gap: var(--space-content-gap); margin-bottom: var(--space-content-gap); }
+.taste-why-record-heading h3 { font-size: var(--type-section); }
+.taste-why-record-flow article { min-height: clamp(13.5rem, 16vw, 16rem); padding: 1.15rem; }
+.taste-why-record-flow small { margin-top: 1.75rem; }
+.taste-why-package { grid-template-columns: minmax(23rem, .8fr) minmax(0, 1.2fr); gap: var(--space-content-gap); }
+.taste-why-package-heading h3 { font-size: var(--type-section); }
+.taste-why-package-tabs button { min-height: 4.5rem; padding: .8rem; }
+.taste-why-package-panel { min-height: 18rem; padding: 1.25rem; }
+.taste-why-package-panel > div { margin-top: 1.5rem; }
+.taste-why-decision { padding: var(--space-content-gap); }
+.taste-why-decision-heading { grid-template-columns: minmax(8rem, .25fr) minmax(30rem, 1.45fr) minmax(15rem, .55fr); gap: var(--space-content-gap); margin-bottom: var(--space-content-gap); }
+.taste-why-decision-heading h3 { font-size: var(--type-section); }
+.taste-why-decision-compare { grid-template-columns: 1fr 4rem 1fr; }
+.taste-why-decision-compare article { padding: 1.2rem; }
+.taste-why-decision-compare header { margin-bottom: 1rem; }
+.taste-why-philosophy { padding-top: var(--space-content-gap); }
+.taste-why-philosophy-flow { margin: 1.75rem 0 var(--space-content-gap); }
+.taste-why-philosophy-flow > span { min-height: 5rem; padding: .8rem; }
+.taste-why-manifesto { grid-template-columns: minmax(24rem, .9fr) minmax(0, 1.1fr); gap: var(--space-content-gap); }
+.taste-why-manifesto h3 { margin-bottom: 1.25rem; font-size: var(--type-chapter); }
+.taste-why-philosophy blockquote { margin: var(--space-section-compact) auto; font-size: clamp(1.9rem, 3vw, 3.25rem); }
+.taste-why-doctrine span { min-height: 5.5rem; padding: 1rem; }
+
+@media (min-width: 821px) and (max-height: 950px) {
+  .taste-lab { --taste-section-space: 4.25rem; --type-display: clamp(3rem, 5.25vw, 4.75rem); }
+  .taste-hero { padding-block: 1.1rem; }
+  .taste-hero-signal { margin-bottom: 1rem; }
+  .taste-hero h1 { margin-block: .7rem .85rem; }
+  .taste-hero-text { line-height: 1.5; }
+  .taste-hero .taste-actions { margin-top: .9rem; }
+  .taste-system-map { margin-top: 1rem; }
+  .taste-system-rail > button { min-height: 6.6rem; padding: .65rem; gap: .45rem; }
+  .taste-system-readout { padding: .8rem; }
+  .taste-system-readout h3 { margin: .75rem 0 .4rem; font-size: 1.1rem; }
+  .taste-system-readout p { margin-bottom: .65rem; line-height: 1.45; }
+  .taste-doctrine-strip { margin-top: .6rem; padding-top: .55rem; }
+  .taste-section-head h2, .taste-chapter-intro h2, .taste-archive-title h2, .taste-final-cta h2 { font-size: var(--type-section); }
+  .taste-tour-header h2, .taste-why-opening h2 { font-size: var(--type-chapter); }
+  .taste-tour { padding-block: 1rem; }
+  .taste-tour-header { padding-bottom: 1rem; }
+  .taste-tour-case { margin-top: .65rem; padding-block: .65rem; }
+  .taste-film-progress { margin-block: .65rem .5rem; }
+  .taste-film-scene { min-height: clamp(15rem, 36dvh, 17.5rem); padding: 1rem; }
+  .taste-film-narrative { min-height: 5.25rem; padding: .8rem 1rem; }
+  .taste-film-sources { min-height: 15rem; }
+  .taste-film-source-field { height: 14rem; }
+  .taste-film-lenses, .taste-film-comparison-surface, .taste-film-report-document { min-height: 17rem; }
+  .taste-film-citation-lines { height: 9rem; }
+  .taste-tour-controls { margin-top: .5rem; }
+  .taste-why { --taste-why-gap: 4.5rem; padding-top: 5rem; }
+}
+
+@media (max-width: 1080px) {
+  .taste-why-opening, .taste-why-source-layout, .taste-why-human, .taste-why-package { grid-template-columns: 1fr; gap: var(--space-content-gap); }
+  .taste-why-verification-heading, .taste-why-decision-heading { grid-template-columns: minmax(8rem, .3fr) minmax(0, 1.7fr); }
+  .taste-why-verification-heading > p:last-child, .taste-why-decision-heading > p:last-child { grid-column: 2; }
+  .taste-why-review-workspace { grid-template-columns: 1fr 1fr; }
+  .taste-why-review-outcome { min-height: 10rem; }
+}
+
+@media (max-width: 820px) {
+  .taste-lab {
+    --space-section-compact: clamp(3.25rem, 11vw, 4rem);
+    --space-section-normal: clamp(3.75rem, 13vw, 4.75rem);
+    --space-section-large: clamp(4.25rem, 15vw, 5.25rem);
+    --space-content-gap: clamp(1.5rem, 6vw, 2.25rem);
+    --type-chapter: clamp(2.5rem, 10vw, 3.6rem);
+    --type-section: clamp(2.3rem, 9vw, 3.35rem);
+  }
+  .taste-problem, .taste-product-stages, .taste-product-explorer, .taste-archive, .taste-lenses, .taste-cross-lens, .taste-users, .taste-workbench-section, .taste-reporting, .taste-memory, .taste-workspace-controls { padding-block: var(--space-section-normal); }
+  .taste-nav { width: min(100% - 2rem, 92rem); }
+  .taste-hero { padding-block: clamp(1rem, 3dvh, 1.5rem); }
+  .taste-hero-signal { margin-bottom: 1rem; }
+  .taste-hero h1 { margin-block: .8rem 1rem; }
+  .taste-hero-text { line-height: 1.55; }
+  .taste-hero .taste-actions { margin-top: 1rem; }
+  .taste-system-map { margin-top: 1.25rem; }
+  .taste-system-rail > button { min-height: 7rem; }
+  .taste-stage-tabs button { min-height: 5.5rem; }
+  .taste-stage-panel, .taste-explorer-shell, .taste-workbench-body { min-height: 0; }
+  .taste-tour { padding-block: var(--space-section-normal); }
+  .taste-film-tour .taste-tour-header h2 { font-size: var(--type-chapter); }
+  .taste-film-narrative h3 { font-size: clamp(1.85rem, 8vw, 2.7rem); }
+  .taste-why { --taste-why-gap: var(--space-section-normal); padding-block: var(--space-section-large) var(--space-section-normal); }
+  .taste-why-monitoring, .taste-why-ai-grid, .taste-why-confidence, .taste-why-review-workspace, .taste-why-verification-heading, .taste-why-decision-heading, .taste-why-decision-compare, .taste-why-manifesto { grid-template-columns: 1fr; }
+  .taste-why-verification-heading > p:last-child, .taste-why-decision-heading > p:last-child { grid-column: 1; }
+  .taste-why-confidence-states { grid-template-columns: 1fr 1fr; }
+  .taste-why-opening h2, .taste-why-manifesto h3 { font-size: var(--type-chapter); }
+  .taste-why-editorial h3, .taste-why-source-copy h3, .taste-why-ai-grid h3, .taste-why-confidence-copy h3, .taste-why-human > div:first-child h3, .taste-why-verification-heading h3, .taste-why-record-heading h3, .taste-why-package-heading h3, .taste-why-decision-heading h3 { font-size: var(--type-section); }
+  .taste-why-authority { margin-top: var(--space-section-compact); }
+  .taste-why-source-layout, .taste-why-ai-grid, .taste-why-confidence, .taste-why-human, .taste-why-verification, .taste-why-records, .taste-why-package, .taste-why-decision, .taste-why-philosophy { margin-top: var(--taste-why-gap); }
+  .taste-why-record-flow article, .taste-why-package-panel, .taste-control-preview-grid article { min-height: 0; }
+  .taste-why-record-flow small { margin-top: 1.5rem; }
+  .taste-final-cta { padding-block: var(--space-section-normal); }
+}
+
+@media (max-width: 480px) {
+  .taste-lab { --type-display: clamp(2.55rem, 11vw, 3rem); }
+  .taste-hero { padding-block: 1rem; }
+  .taste-hero-signal { margin-bottom: .65rem; }
+  .taste-system-map { margin-top: .45rem; }
+  .taste-hero .taste-actions { flex-wrap: nowrap; gap: .5rem; }
+  .taste-hero .taste-actions a { flex: 1 1 0; min-width: 0; padding-inline: .45rem; gap: .35rem; font-size: .78rem; }
+  .taste-hero .taste-actions a svg { width: 1rem; height: 1rem; }
+  .taste-system-rail { grid-template-columns: repeat(8, 1fr); }
+  .taste-system-rail > button { min-height: 3.25rem; padding: .45rem; gap: .3rem; }
+  .taste-system-rail > button strong { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .taste-system-readout { padding: .65rem; }
+  .taste-system-readout h3 { margin: .55rem 0 .3rem; font-size: 1rem; }
+  .taste-system-readout p { margin-bottom: .45rem; font-size: .72rem; line-height: 1.35; }
+  .taste-system-readout .taste-controls button { min-height: 1.9rem; padding-inline: .5rem; }
+  .taste-doctrine-strip { display: none; }
+  .taste-doctrine-strip span:nth-child(odd) { padding-left: 0; border-left: 0; }
+  .taste-doctrine-strip span:nth-child(even) { padding-left: .55rem; border-left: 1px solid var(--taste-line); }
+  .taste-life-track button { min-height: 4.75rem; }
+  .taste-user-item { min-height: 4rem; }
+  .taste-memory-map > div { min-height: 5.75rem; }
+  .taste-final-doctrine { margin-top: 2rem; }
+  .taste-why-editorial h3, .taste-why-record-heading h3 { font-size: clamp(1.9rem, 7.8vw, 2.35rem); }
 }
 
 @media (prefers-reduced-motion: reduce) {
