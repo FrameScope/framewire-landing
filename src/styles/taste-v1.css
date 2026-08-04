@@ -191,8 +191,9 @@
 .taste-archive-capabilities h3 { margin: 0 0 .55rem; font-size: .95rem; }
 .taste-archive-capabilities p { margin: 0; color: var(--taste-muted); font-size: .78rem; line-height: 1.58; }
 
-.taste-lens-matrix { display: grid; grid-template-columns: repeat(5, 1fr); border-top: 1px solid var(--taste-line); border-left: 1px solid var(--taste-line); }
-.taste-lens-item { min-width: 0; min-height: clamp(11.75rem, 15.5vw, 13rem); padding: .9rem 1rem 1rem; color: var(--taste-ink); text-align: left; border: 0; border-right: 1px solid var(--taste-line); border-bottom: 1px solid var(--taste-line); background: rgba(255,255,255,.012); cursor: pointer; transition: transform .25s ease, background .25s ease, color .25s ease; }
+.taste-lens-matrix { display: grid; grid-template-columns: repeat(5, 1fr); border-top: 1px solid var(--taste-line); border-left: 1px solid var(--taste-line); scroll-margin-top: calc(var(--taste-header-height) + 1rem); }
+.taste-lens-cell { min-width: 0; display: contents; }
+.taste-lens-item { width: 100%; min-width: 0; min-height: clamp(11.75rem, 15.5vw, 13rem); padding: .9rem 1rem 1rem; color: var(--taste-ink); text-align: left; border: 0; border-right: 1px solid var(--taste-line); border-bottom: 1px solid var(--taste-line); background: rgba(255,255,255,.012); cursor: pointer; transition: transform .25s ease, background .25s ease, color .25s ease; }
 .taste-lens-item:hover, .taste-lens-item.active { transform: translateY(-3px); background: rgba(85,215,229,.055); }
 .taste-lens-item.active { box-shadow: inset 0 2px currentColor; }
 .taste-lens-item.cyan { color: var(--taste-cyan); } .taste-lens-item.amber { color: var(--taste-amber); } .taste-lens-item.green { color: var(--taste-green); } .taste-lens-item.violet { color: var(--taste-violet); }
@@ -204,7 +205,9 @@
 .taste-lens-item:hover .taste-lens-icon, .taste-lens-item.active .taste-lens-icon { transform: scale(1.035); opacity: 1; }
 .taste-lens-item h3 { margin: 0 0 .42rem; color: var(--taste-ink); font-size: 1.05rem; font-weight: 540; }
 .taste-lens-item p { margin: 0; color: var(--taste-muted); font-size: .76rem; line-height: 1.5; }
-.taste-lens-detail { margin-top: .75rem; padding: 2.1rem; display: grid; grid-template-columns: .6fr 1.4fr; gap: 2rem 3rem; border: 1px solid var(--taste-line); background: linear-gradient(145deg, rgba(17,26,30,.94), rgba(8,13,15,.94)); animation: taste-fade .35s ease both; }
+.taste-lens-detail { margin-top: .75rem; padding: 2.1rem; display: grid; grid-template-columns: .6fr 1.4fr; gap: 2rem 3rem; border: 1px solid var(--taste-line); background: linear-gradient(145deg, rgba(17,26,30,.94), rgba(8,13,15,.94)); animation: taste-fade .35s ease both; scroll-margin-top: calc(var(--taste-header-height) + clamp(2.25rem, 5dvh, 3rem)); }
+.taste-lens-back { grid-column: 1 / -1; justify-self: start; min-height: 2.75rem; padding: 0 .75rem; display: inline-flex; align-items: center; gap: .4rem; color: var(--taste-muted); border: 1px solid var(--taste-line); background: rgba(255,255,255,.015); cursor: pointer; }
+.taste-lens-back:hover { color: var(--lens); border-color: color-mix(in srgb, var(--lens) 42%, transparent); }
 .taste-lens-detail.cyan { --lens: var(--taste-cyan); } .taste-lens-detail.amber { --lens: var(--taste-amber); } .taste-lens-detail.green { --lens: var(--taste-green); } .taste-lens-detail.violet { --lens: var(--taste-violet); }
 .taste-lens-detail-title { display: flex; gap: 1rem; color: var(--lens); }
 .taste-lens-detail-title .taste-lens-icon { flex: 0 0 auto; }
@@ -1585,3 +1588,18 @@
 @media (prefers-reduced-motion: reduce) {
   .taste-why-authority-streams article > i, .taste-why-provenance, .taste-why-review-outcome, .taste-why-package-panel { transition: none !important; animation: none !important; }
 }
+
+@media (min-width: 821px) {
+  .taste-lens-item { min-height: clamp(10.25rem, 13.6vw, 11.4rem); padding: .75rem .85rem .85rem; }
+  .taste-lens-graphic { height: 4.85rem; margin: .45rem 0 .6rem; }
+  .taste-lens-graphic .taste-lens-icon { width: 5.15rem; height: 5.15rem; }
+  .taste-lens-item h3 { margin-bottom: .32rem; }
+}
+
+@media (max-width: 480px) {
+  .taste-lens-cell { display: grid; grid-template-columns: minmax(0, 1fr); }
+  .taste-lens-detail-inline { grid-column: 1; width: 100%; margin: 0; border-top: 0; }
+  .taste-lens-back { min-height: 2.75rem; }
+}
+
+.taste-lab #taste-lens-detail { scroll-margin-top: calc(var(--taste-header-height) + clamp(2.25rem, 5dvh, 3rem)); }

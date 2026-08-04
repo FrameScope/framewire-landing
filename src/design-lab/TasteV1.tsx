@@ -110,6 +110,20 @@ function useReducedMotion() {
   return reduced;
 }
 
+function useMediaQuery(query: string) {
+  const [matches, setMatches] = useState(() => typeof window !== "undefined" && window.matchMedia(query).matches);
+
+  useEffect(() => {
+    const media = window.matchMedia(query);
+    const update = () => setMatches(media.matches);
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, [query]);
+
+  return matches;
+}
+
 function useCycle(length: number, delay = 3200) {
   const reduced = useReducedMotion();
   const [index, setIndex] = useState(0);
@@ -383,62 +397,90 @@ function LensGraphic({ kind }: { kind: LensIconKind }) {
 
 function LensSystem({ selected, setSelected }: { selected: number; setSelected: (index: number) => void }) {
   const lens = lenses[selected];
+  const matrixRef = useRef<HTMLDivElement>(null);
   const detailRef = useRef<HTMLElement>(null);
+  const lensButtonRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const reducedMotion = useReducedMotion();
+  const inlineDetail = useMediaQuery("(max-width: 480px)");
 
-  const selectLens = useCallback((index: number) => {
-    setSelected(index);
+  const scrollToLensAnchor = useCallback((element: HTMLElement) => {
+    const rect = element.getBoundingClientRect();
+    const scrollMargin = Number.parseFloat(window.getComputedStyle(element).scrollMarginTop) || 0;
+    const destination = Math.max(0, window.scrollY + rect.top - scrollMargin);
+    window.scrollTo({ top: destination, behavior: reducedMotion ? "auto" : "smooth" });
+  }, [reducedMotion]);
 
+  const bringDetailIntoView = useCallback(() => {
     window.requestAnimationFrame(() => {
       window.requestAnimationFrame(() => {
         const detail = detailRef.current;
-        if (!detail || !window.matchMedia("(min-width: 821px)").matches) return;
+        if (!detail) return;
 
         const rect = detail.getBoundingClientRect();
-        const visibleDetailThreshold = window.innerHeight - Math.min(112, window.innerHeight * 0.16);
-        if (rect.top <= visibleDetailThreshold && rect.bottom >= 0) return;
+        const headerBottom = document.querySelector<HTMLElement>(".taste-nav")?.getBoundingClientRect().bottom ?? 0;
+        const safeTop = headerBottom + 12;
+        const safeBottom = window.innerHeight - 12;
+        const visibleHeight = Math.max(0, Math.min(rect.bottom, safeBottom) - Math.max(rect.top, safeTop));
+        const sufficientVisibility = rect.top >= safeTop && visibleHeight >= Math.min(rect.height * 0.6, window.innerHeight * 0.4);
+        if (sufficientVisibility) return;
 
-        const restrainedTop = window.innerHeight - Math.min(220, window.innerHeight * 0.29);
-        const destination = Math.max(0, window.scrollY + rect.top - restrainedTop);
-        window.scrollTo({ top: destination, behavior: reducedMotion ? "auto" : "smooth" });
+        scrollToLensAnchor(detail);
       });
     });
-  }, [reducedMotion, setSelected]);
+  }, [scrollToLensAnchor]);
+
+  const selectLens = useCallback((index: number) => {
+    setSelected(index);
+    bringDetailIntoView();
+  }, [bringDetailIntoView, setSelected]);
+
+  const returnToLenses = useCallback(() => {
+    if (matrixRef.current) scrollToLensAnchor(matrixRef.current);
+    window.requestAnimationFrame(() => lensButtonRefs.current[selected]?.focus({ preventScroll: true }));
+  }, [scrollToLensAnchor, selected]);
+
+  const renderDetail = (isInline: boolean) => (
+    <article ref={detailRef} className={`taste-lens-detail ${lens.accent} ${isInline ? "taste-lens-detail-inline" : ""}`} id="taste-lens-detail" aria-live="polite" key={lens.name} data-testid="lens-detail">
+      <button type="button" className="taste-lens-back" onClick={returnToLenses} onKeyDown={(event) => activateOnKey(event, returnToLenses)}><ChevronLeft size={16} aria-hidden="true" />Back to all lenses</button>
+      <div className="taste-lens-detail-title"><LensIcon kind={lens.icon} size={52} strokeWidth={1.55} aria-hidden="true" /><div><span>SELECTED LENS</span><h3 id={lensDefinitionTargets[selected]} tabIndex={-1}>{lens.name}</h3></div></div>
+      <div className="taste-lens-question"><span>Question answered</span><p>{lens.question}</p></div>
+      <div className="taste-lens-detail-grid">
+        <div><span>Evidence examined</span><p>{lens.evidence}</p></div>
+        <div><span>Connects with</span><p>{lens.connections}</p></div>
+        <div className="taste-lens-refusal"><span>Refusal boundary</span><p>{lens.refuses}</p></div>
+      </div>
+      <div className="taste-lens-outputs"><span>Main outputs</span><div>{lens.outputs.map((output) => <small key={output}>{output}</small>)}</div></div>
+      <div className="taste-lens-example"><DemoFlag /><p>{lens.example}</p></div>
+    </article>
+  );
 
   return (
     <section className="taste-lenses taste-story-stage" id="intelligence-lenses" tabIndex={-1}>
       <SectionHead eyebrow="Complete intelligence-lens system" title="Independent lenses. Shared evidence. No hidden master score." lead="Choose a lens to inspect its question, evidence boundary, outputs, relationships and refusal conditions." />
-      <div className="taste-lens-matrix" role="group" aria-label="Principal intelligence lenses">
+      <div ref={matrixRef} className="taste-lens-matrix" role="group" aria-label="Principal intelligence lenses">
         {lenses.map((item, index) => {
           return (
-            <button
-              type="button"
-              className={`taste-lens-item ${item.accent} ${selected === index ? "active" : ""}`}
-              key={item.name}
-              data-testid={`lens-${index}`}
-              aria-pressed={selected === index}
-              aria-controls="taste-lens-detail"
-              onClick={() => selectLens(index)}
-              onKeyDown={(event) => activateOnKey(event, () => selectLens(index))}
-            >
-              <div className="taste-lens-top"><span className="taste-lens-abbreviation">{item.abbreviation}</span><span>{String(index + 1).padStart(2, "0")}</span></div>
-              <LensGraphic kind={item.icon} />
-              <h3>{item.name}</h3><p>{item.short}</p>
-            </button>
+            <div className="taste-lens-cell" key={item.name}>
+              <button
+                ref={(element) => { lensButtonRefs.current[index] = element; }}
+                type="button"
+                className={`taste-lens-item ${item.accent} ${selected === index ? "active" : ""}`}
+                data-testid={`lens-${index}`}
+                aria-pressed={selected === index}
+                aria-controls="taste-lens-detail"
+                onClick={() => selectLens(index)}
+                onKeyDown={(event) => activateOnKey(event, () => selectLens(index))}
+              >
+                <div className="taste-lens-top"><span className="taste-lens-abbreviation">{item.abbreviation}</span><span>{String(index + 1).padStart(2, "0")}</span></div>
+                <LensGraphic kind={item.icon} />
+                <h3>{item.name}</h3><p>{item.short}</p>
+              </button>
+              {inlineDetail && selected === index && renderDetail(true)}
+            </div>
           );
         })}
       </div>
-      <article ref={detailRef} className={`taste-lens-detail ${lens.accent}`} id="taste-lens-detail" aria-live="polite" key={lens.name} data-testid="lens-detail">
-        <div className="taste-lens-detail-title"><LensIcon kind={lens.icon} size={52} strokeWidth={1.55} aria-hidden="true" /><div><span>SELECTED LENS</span><h3 id={lensDefinitionTargets[selected]} tabIndex={-1}>{lens.name}</h3></div></div>
-        <div className="taste-lens-question"><span>Question answered</span><p>{lens.question}</p></div>
-        <div className="taste-lens-detail-grid">
-          <div><span>Evidence examined</span><p>{lens.evidence}</p></div>
-          <div><span>Connects with</span><p>{lens.connections}</p></div>
-          <div className="taste-lens-refusal"><span>Refusal boundary</span><p>{lens.refuses}</p></div>
-        </div>
-        <div className="taste-lens-outputs"><span>Main outputs</span><div>{lens.outputs.map((output) => <small key={output}>{output}</small>)}</div></div>
-        <div className="taste-lens-example"><DemoFlag /><p>{lens.example}</p></div>
-      </article>
+      {!inlineDetail && renderDetail(false)}
     </section>
   );
 }
