@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState, type KeyboardEvent, type ReactNode } from "react";
+import { useCallback, useEffect, useRef, useState, type CSSProperties, type KeyboardEvent, type ReactNode } from "react";
 import {
   ArrowDownRight,
   ArrowRight,
@@ -33,6 +33,7 @@ import { Button } from "../components/ui/Button";
 import { BETA_MAILTO, CONTACT_MAILTO } from "../config";
 import FrameWireTour from "./FrameWireTour";
 import { LensIcon, type LensIconKind } from "./LensIcons";
+import { useTasteMotion } from "./useTasteMotion";
 import WhyFrameWire from "./WhyFrameWire";
 import {
   audiences,
@@ -52,6 +53,15 @@ const doctrine = [
   "Deterministic First.",
   "LLM Assists.",
   "Humans Decide.",
+];
+
+const pageNavigation = [
+  ["taste-method", "Method"],
+  ["framewire-tour", "Tour"],
+  ["live", "System"],
+  ["intelligence-lenses", "Lenses"],
+  ["investigation-workbench", "Workbench"],
+  ["taste-beta", "Beta"],
 ];
 
 const archiveCapabilities = [
@@ -124,9 +134,9 @@ function useMediaQuery(query: string) {
   return matches;
 }
 
-function useCycle(length: number, delay = 3200) {
+function useCycle(length: number, delay = 3200, { loop = true }: { loop?: boolean } = {}) {
   const reduced = useReducedMotion();
-  const [index, setIndex] = useState(0);
+  const [index, setIndexState] = useState(0);
   const [playing, setPlaying] = useState(true);
 
   useEffect(() => {
@@ -135,35 +145,19 @@ function useCycle(length: number, delay = 3200) {
 
   useEffect(() => {
     if (!playing || reduced) return;
-    const timer = window.setInterval(() => setIndex((value) => (value + 1) % length), delay);
-    return () => window.clearInterval(timer);
-  }, [delay, length, playing, reduced]);
+    const timer = window.setTimeout(() => {
+      const nextIndex = loop ? (index + 1) % length : Math.min(length - 1, index + 1);
+      setIndexState(nextIndex);
+      if (!loop && nextIndex === length - 1) setPlaying(false);
+    }, delay);
+    return () => window.clearTimeout(timer);
+  }, [delay, index, length, loop, playing, reduced]);
 
-  const previous = () => setIndex((value) => (value - 1 + length) % length);
-  const next = () => setIndex((value) => (value + 1) % length);
+  const setIndex = (value: number) => { setPlaying(false); setIndexState(value); };
+  const previous = () => { setPlaying(false); setIndexState((value) => (value - 1 + length) % length); };
+  const next = () => { setPlaying(false); setIndexState((value) => (value + 1) % length); };
 
   return { index, setIndex, playing, setPlaying, previous, next, reduced };
-}
-
-function useScrollReveal() {
-  useEffect(() => {
-    const elements = [...document.querySelectorAll<HTMLElement>("[data-taste-reveal]")];
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      elements.forEach((element) => element.classList.add("taste-visible"));
-      return;
-    }
-    const observer = new IntersectionObserver(
-      (entries) => entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("taste-visible");
-          observer.unobserve(entry.target);
-        }
-      }),
-      { threshold: 0.08 },
-    );
-    elements.forEach((element) => observer.observe(element));
-    return () => observer.disconnect();
-  }, []);
 }
 
 function Controls({
@@ -214,12 +208,13 @@ function DemoFlag({ children = "Illustrative product demonstration" }: { childre
 }
 
 function SystemMap() {
-  const cycle = useCycle(systemMap.length, 3000);
+  const cycle = useCycle(systemMap.length, 850, { loop: false });
   const active = systemMap[cycle.index];
   const Icon = active.icon;
+  const systemProgress = { "--taste-system-progress": (cycle.index + 1) / systemMap.length } as CSSProperties;
 
   return (
-    <div className="taste-system-map" data-taste-reveal>
+    <div className="taste-system-map" data-taste-reveal data-taste-scroll data-taste-hero="system" style={systemProgress}>
       <div className="taste-system-rail" role="group" aria-label="FrameWire product flow">
         {systemMap.map((step, index) => {
           const StepIcon = step.icon;
@@ -255,7 +250,7 @@ function ProductStages() {
   const stage = userStages[cycle.index];
 
   return (
-    <section className="taste-product-stages" id="governed-collection" tabIndex={-1}>
+    <section className="taste-product-stages" id="governed-collection" tabIndex={-1} data-taste-nav="taste-method">
       <SectionHead eyebrow="Search to investigation to report" title="Three human stages. One preserved evidence chain." lead="The same fictional investigation moves from discovery to contextual examination and finally to a report a human can defend." />
       <div className="taste-stage-layout" data-taste-reveal>
         <div className="taste-stage-tabs" role="tablist" aria-label="FrameWire user stages">
@@ -311,7 +306,7 @@ function ProductExplorer() {
   );
 
   return (
-    <section className="taste-product-explorer" id="live" tabIndex={-1}>
+    <section className="taste-product-explorer" id="live" tabIndex={-1} data-taste-nav="live">
       <SectionHead eyebrow="Public product journey" title="Explore the FrameWire system." lead="Four public-facing groups carry an investigator from observation through analysis and context to a preserved, reviewable report." />
       <div className="taste-explorer-shell" data-taste-reveal>
         <aside className="taste-explorer-sidebar" aria-label="FrameWire public product groups">
@@ -359,7 +354,7 @@ function EvidenceLifecycle() {
   const state = evidenceStates[cycle.index];
 
   return (
-    <div className="taste-evidence-lifecycle" id="evidence-lifecycle" tabIndex={-1} data-taste-reveal>
+    <div className="taste-evidence-lifecycle" id="evidence-lifecycle" tabIndex={-1} data-taste-reveal data-taste-scroll>
       <div className="taste-record-card">
         <div className="taste-record-top"><FileText size={20} /><span>DEMO-EVIDENCE-001</span><strong>ORIGINAL LINK RETAINED</strong></div>
         <p>Fictional public notice · PDF · English and Nepali</p>
@@ -389,7 +384,7 @@ function EvidenceLifecycle() {
 
 function LensGraphic({ kind }: { kind: LensIconKind }) {
   return (
-    <div className="taste-lens-graphic" aria-hidden="true">
+    <div className="taste-lens-graphic" data-lens-icon={kind} aria-hidden="true">
       <LensIcon kind={kind} size={102} strokeWidth={1.7} />
     </div>
   );
@@ -455,9 +450,9 @@ function LensSystem({ selected, setSelected }: { selected: number; setSelected: 
   );
 
   return (
-    <section className="taste-lenses taste-story-stage" id="intelligence-lenses" tabIndex={-1}>
+    <section className="taste-lenses taste-story-stage" id="intelligence-lenses" tabIndex={-1} data-taste-nav="intelligence-lenses">
       <SectionHead eyebrow="Complete intelligence-lens system" title="Independent lenses. Shared evidence. No hidden master score." lead="Choose a lens to inspect its question, evidence boundary, outputs, relationships and refusal conditions." />
-      <div ref={matrixRef} className="taste-lens-matrix" role="group" aria-label="Principal intelligence lenses">
+      <div ref={matrixRef} className="taste-lens-matrix" role="group" aria-label="Principal intelligence lenses" data-taste-reveal data-taste-stagger="lens-rows">
         {lenses.map((item, index) => {
           return (
             <div className="taste-lens-cell" key={item.name}>
@@ -490,7 +485,7 @@ function CrossLens() {
   const active = lenses[cycle.index];
 
   return (
-    <section className="taste-cross-lens taste-story-stage" id="cross-lens-context" tabIndex={-1}>
+    <section className="taste-cross-lens taste-story-stage" id="cross-lens-context" tabIndex={-1} data-taste-nav="intelligence-lenses" data-taste-scroll>
       <SectionHead eyebrow="Cross-lens contextual intelligence" title="Compare observations without collapsing them." lead="A preserved record can be viewed through several independent lenses, then recombined into a structured investigation view. No lens can overwrite another." />
       <div className="taste-cross-canvas" data-taste-reveal>
         <div className="taste-cross-source"><FileText size={25} /><span>Preserved evidence</span><strong>DEMO-EVIDENCE-001</strong></div>
@@ -559,7 +554,7 @@ function AudienceWalkthroughs() {
   );
 
   return (
-    <section className="taste-users" id="taste-users">
+    <section className="taste-users" id="taste-users" data-taste-nav="investigation-workbench">
       <SectionHead eyebrow="Intended-user walkthroughs" title="One evidence doctrine. Eight practical entry points." lead="Select a role to follow its question from public material through Search, Investigation, lenses and a human-reviewed output." />
       <div className="taste-audience-layout" data-taste-reveal>
         <div className="taste-user-list" role="group" aria-label="Intended user walkthroughs">
@@ -586,7 +581,7 @@ function Workbench() {
   const tab = workbenchTabs[selected];
 
   return (
-    <section className="taste-workbench-section" id="investigation-workbench" tabIndex={-1}>
+    <section className="taste-workbench-section" id="investigation-workbench" tabIndex={-1} data-taste-nav="investigation-workbench">
       <SectionHead eyebrow="Investigation workspace and reporting" title="The evidence stays visible while understanding changes." lead="This fictional workbench demonstrates how a human can move between evidence, time, entities, lenses, findings and report assembly without losing the investigation question." />
       <div className="taste-workbench" data-taste-reveal>
         <div className="taste-workbench-top"><div><DemoFlag /><h3>{illustrativeCase.title}</h3><p>{illustrativeCase.question}</p></div><span>REVIEW STATE / IN PROGRESS</span></div>
@@ -611,12 +606,13 @@ function ReportingAndExports() {
   const cycle = useCycle(reportAssembly.length, 2800);
   const [decision, setDecision] = useState("Qualify");
   const active = reportAssembly[cycle.index];
+  const reportEligible = decision === "Include" || decision === "Qualify";
 
   return (
-    <section className="taste-reporting taste-story-stage" id="taste-reporting">
+    <section className="taste-reporting taste-story-stage" id="taste-reporting" data-taste-nav="investigation-workbench" data-taste-scroll>
       <SectionHead eyebrow="Report, export and analytics" title="Findings leave the investigation under governance." lead="Report Studio keeps evidence, contradiction, limitation and human annotation attached. Exports and analytics remain non-canonical derivatives." />
       <div className="taste-report-grid" data-taste-reveal>
-        <article className="taste-report-studio" id="taste-report-studio">
+        <article className={`taste-report-studio ${reportEligible ? "report-eligible" : "report-held"}`} id="taste-report-studio">
           <div className="taste-report-title"><FileCheck2 size={24} /><div><span>REPORT STUDIO</span><h3>Illustrative findings assembly</h3></div></div>
           <div className="taste-assembly-track">{reportAssembly.map(([name], index) => <button type="button" key={name} className={cycle.index === index ? "active" : index < cycle.index ? "complete" : ""} aria-pressed={cycle.index === index} onClick={() => cycle.setIndex(index)}><span>{String(index + 1).padStart(2, "0")}</span>{name}</button>)}</div>
           <div className="taste-assembly-detail" key={active[0]}><span>{active[0]}</span><p>{active[1]}</p></div>
@@ -633,7 +629,7 @@ function ReportingAndExports() {
 
 function Memory() {
   return (
-    <section className="taste-memory taste-story-stage" id="shared-intelligence-memory" tabIndex={-1}>
+    <section className="taste-memory taste-story-stage" id="shared-intelligence-memory" tabIndex={-1} data-taste-nav="investigation-workbench" data-taste-scroll>
       <SectionHead eyebrow="Shared intelligence memory" title="Historical context remains available, not automatically current." lead="Reviewed investigations preserve continuity across evidence, entities, narrative families, sources, locations, findings and reports." />
       <div className="taste-memory-map" data-taste-reveal>
         {memoryNodes.map((node, index) => <div key={node} className={index === 0 || index === memoryNodes.length - 1 ? "anchor" : ""}><span>{String(index + 1).padStart(2, "0")}</span><strong>{node}</strong>{index < memoryNodes.length - 1 && <ArrowRight size={16} />}</div>)}
@@ -644,7 +640,7 @@ function Memory() {
 }
 
 export default function TasteV1() {
-  useScrollReveal();
+  const { rootRef, activeNavigation } = useTasteMotion();
   const [tourStage, setTourStage] = useState(0);
   const [returnTourStage, setReturnTourStage] = useState<number | null>(null);
   const [selectedLens, setSelectedLens] = useState(0);
@@ -695,33 +691,34 @@ export default function TasteV1() {
   }, []);
 
   return (
-    <div className="taste-lab">
+    <div className="taste-lab" ref={rootRef}>
       <a className="taste-skip" href="#taste-main">Skip to content</a>
       <div className="taste-grain" aria-hidden="true" />
 
       <header className="taste-nav">
         <a href="/design-lab/taste-v1" className="taste-brand" aria-label="FrameWire experimental landing page"><Wordmark size={28} /><small>DESIGN LAB</small></a>
-        <nav aria-label="Page navigation"><a href="#taste-method">Method</a><a href="#framewire-tour">Tour</a><a href="#live">System</a><a href="#intelligence-lenses">Lenses</a><a href="#investigation-workbench">Workbench</a><a href="#taste-beta">Beta</a></nav>
+        <nav aria-label="Page navigation">{pageNavigation.map(([target, label]) => <a href={`#${target}`} className={activeNavigation === target ? "active" : ""} aria-current={activeNavigation === target ? "page" : undefined} key={target}>{label}</a>)}</nav>
         <a className="taste-nav-action" href={BETA_MAILTO}>Enter beta <ArrowRight size={16} /></a>
+        <span className="taste-page-progress" aria-hidden="true"><i /></span>
       </header>
 
       <main id="taste-main">
         <section className="taste-hero taste-story-stage">
-          <div className="taste-hero-signal" aria-hidden="true"><span>EN / ने / हिं</span><span>PUBLIC INFORMATION</span><span>PRESERVED EVIDENCE</span></div>
-          <div className="taste-hero-copy taste-visible" data-taste-reveal>
-            <p className="taste-eyebrow"><CircleDot size={14} /> Human-centred contextual intelligence</p>
-            <h1>Contextual Intelligence. <em>Human-Led</em> Investigations.</h1>
-            <p className="taste-hero-text">FrameWire collects public information, preserves original evidence, examines it through independent intelligence lenses, connects only supported relationships and helps a human produce a defensible report.</p>
-            <div className="taste-actions"><Button variant="primary" size="lg" href={BETA_MAILTO} icon={<ArrowRight size={18} />}>Request beta access</Button><Button variant="secondary" size="lg" href="#framewire-tour" icon={<ArrowDownRight size={18} />}>Take the tour</Button></div>
+          <div className="taste-hero-signal" data-taste-hero="context" aria-hidden="true"><span>EN / ने / हिं</span><span>PUBLIC INFORMATION</span><span>PRESERVED EVIDENCE</span></div>
+          <div className="taste-hero-copy">
+            <p className="taste-eyebrow" data-taste-hero="eyebrow"><CircleDot size={14} /> Human-centred contextual intelligence</p>
+            <h1 data-taste-hero="headline">Contextual Intelligence. <em>Human-Led</em> Investigations.</h1>
+            <p className="taste-hero-text" data-taste-hero="support">FrameWire collects public information, preserves original evidence, examines it through independent intelligence lenses, connects only supported relationships and helps a human produce a defensible report.</p>
+            <div className="taste-actions" data-taste-hero="actions"><Button variant="primary" size="lg" href={BETA_MAILTO} icon={<ArrowRight size={18} />}>Request beta access</Button><Button variant="secondary" size="lg" href="#framewire-tour" icon={<ArrowDownRight size={18} />}>Take the tour</Button></div>
           </div>
           <SystemMap />
-          <div className="taste-doctrine-strip">{doctrine.map((item) => <span key={item}>{item}</span>)}</div>
+          <div className="taste-doctrine-strip" data-taste-hero="doctrine" data-taste-stagger="doctrine">{doctrine.map((item) => <span key={item}>{item}</span>)}</div>
         </section>
 
         <FrameWireTour activeStage={tourStage} onStageChange={setTourStage} onDefinitionNavigate={navigateToDefinition} />
         <WhyFrameWire />
 
-        <section className="taste-problem" id="taste-method">
+        <section className="taste-problem" id="taste-method" data-taste-nav="taste-method">
           <div className="taste-chapter-intro" data-taste-reveal><p className="taste-kicker">Why FrameWire exists</p><h2>Information arrives fast. Understanding does not.</h2></div>
           <div className="taste-problem-grid">
             <div className="taste-problem-lead" data-taste-reveal><ScanSearch size={42} strokeWidth={1.2} /><p>An investigation is not a feed, automatic answer or prediction. It is a disciplined path from public material to a conclusion another person can inspect.</p></div>
@@ -731,7 +728,7 @@ export default function TasteV1() {
 
         <ProductStages />
 
-        <section className="taste-archive" id="archive-first" tabIndex={-1}>
+        <section className="taste-archive" id="archive-first" tabIndex={-1} data-taste-nav="taste-method">
           <div className="taste-archive-title" data-taste-reveal><p className="taste-kicker">Archive-first evidence foundation</p><h2>The source should survive the analysis.</h2><p>Preservation begins the investigation. Cleaning, extraction and classification create governed derivatives without destroying the original or hiding uncertainty.</p></div>
           <div><EvidenceLifecycle /><div className="taste-archive-capabilities">{archiveCapabilities.map(([title, text], index) => <article id={index === 0 ? "evidence-intake" : undefined} tabIndex={index === 0 ? -1 : undefined} key={title} data-taste-reveal><h3>{title}</h3><p>{text}</p></article>)}</div></div>
         </section>
@@ -745,9 +742,9 @@ export default function TasteV1() {
         <Memory />
         <WorkspaceControlsPreview />
 
-        <section className="taste-final-cta taste-story-stage" id="taste-beta">
+        <section className="taste-final-cta taste-story-stage" id="taste-beta" data-taste-nav="taste-beta">
           <div data-taste-reveal><p className="taste-kicker">FrameWire private beta</p><h2>Preserve the record. Examine the context. Decide with evidence.</h2><p>Designed for journalists, researchers, NGOs, government, political teams, security analysts, diplomats and general investigators who remain accountable for what they conclude.</p><div className="taste-actions"><Button variant="primary" size="lg" href={BETA_MAILTO} icon={<ArrowRight size={18} />}>Request beta access</Button><Button variant="secondary" size="lg" href={CONTACT_MAILTO} icon={<ArrowRight size={18} />}>Contact FrameWire</Button></div></div>
-          <div className="taste-final-doctrine" aria-label="FrameWire doctrine"><ShieldCheck size={28} /><span>Investigation infrastructure, not a chatbot.</span><span>No automatic answer.</span><span>No automatic persuasion.</span><span>No automatic conclusion.</span></div>
+          <div className="taste-final-doctrine" aria-label="FrameWire doctrine" data-taste-reveal data-taste-stagger="doctrine"><ShieldCheck size={28} /><span>Investigation infrastructure, not a chatbot.</span><span>No automatic answer.</span><span>No automatic persuasion.</span><span>No automatic conclusion.</span></div>
         </section>
       </main>
 

@@ -126,7 +126,7 @@ function AuthorityGraphic() {
   const [assembled, setAssembled] = useState(false);
 
   return (
-    <div className={`taste-why-authority ${assembled ? "assembled" : ""}`} id="why-three-authorities" data-taste-reveal>
+    <div className={`taste-why-authority ${assembled ? "assembled" : ""}`} id="why-three-authorities" data-taste-reveal data-taste-scroll>
       <div className="taste-why-authority-streams">
         {authorities.map((authority) => {
           const Icon = authority.icon;
@@ -156,7 +156,7 @@ function AuthorityGraphic() {
 
 function MonitoringComparison() {
   return (
-    <div className="taste-why-monitoring" id="why-monitoring-investigation" data-taste-reveal>
+    <div className="taste-why-monitoring" id="why-monitoring-investigation" data-taste-reveal data-taste-scroll>
       <article className="signals">
         <header><ScanSearch size={25} strokeWidth={1.35} /><div><span>Useful first view</span><h3>Monitoring signals</h3></div></header>
         <div className="taste-why-signal-field" aria-label="Monitoring signals">{monitoringSignals.map((signal) => <span key={signal}>{signal}</span>)}</div>
@@ -177,7 +177,7 @@ function SourceSurvives() {
   const stages = ["Canonical Archive", "Working Copy", "Analytical Observations", "Human-Reviewed Finding"];
 
   return (
-    <div className="taste-why-source-layout taste-story-stage" id="why-source-survives">
+    <div className="taste-why-source-layout taste-story-stage" id="why-source-survives" data-taste-scroll>
       <div className="taste-why-source-copy" data-taste-reveal>
         <SectionLabel>Archive first</SectionLabel>
         <h3>The analysis may change. The evidence should remain inspectable.</h3>
@@ -227,7 +227,7 @@ function AIBoundaries() {
 function ConfidenceAndHuman() {
   return (
     <>
-      <div className="taste-why-confidence" id="why-confidence-support" data-taste-reveal>
+      <div className="taste-why-confidence" id="why-confidence-support" data-taste-reveal data-taste-scroll>
         <div className="taste-why-confidence-copy"><SectionLabel>Confidence versus support</SectionLabel><h3>FrameWire does not hide uncertainty behind confident wording.</h3><p>Polished language does not increase evidence quality. A finding's state follows its support—not the fluency of its sentence.</p></div>
         <div className="taste-why-confidence-axis"><span>Confident language</span><i aria-hidden="true" /><span>Evidence support</span></div>
         <div className="taste-why-confidence-states">{confidenceStates.map((state) => { const Icon = state.icon; return <article className={state.className} key={state.name}><Icon size={18} /><strong>{state.name}</strong><p>{state.detail}</p></article>; })}</div>
@@ -249,7 +249,7 @@ function HumanVerification() {
   const action = reviewActions[selected];
 
   return (
-    <div className="taste-why-verification taste-story-stage" id="why-human-verification" data-taste-reveal>
+    <div className="taste-why-verification taste-story-stage" id="why-human-verification" data-taste-reveal data-taste-scroll>
       <div className="taste-why-verification-heading"><SectionLabel>Human verification is real work</SectionLabel><h3>Human verification is not a ceremonial approval button.</h3><p>It is where the investigator decides whether the evidence supports the language, weight and consequence of a finding.</p></div>
       <div className="taste-why-review-workspace">
         <article className="taste-why-machine-observation"><span>Machine observation</span><h4>Public sources appear to support one account.</h4><div><small><Quote size={13} /> Exact evidence</small><small><Fingerprint size={13} /> Source provenance</small><small><CheckCircle2 size={13} /> Supporting material</small><small><XCircle size={13} /> Contradicting material</small><small><CircleAlert size={13} /> Coverage limitations</small><small><GitCompareArrows size={13} /> Alternative interpretation</small></div></article>
@@ -262,7 +262,7 @@ function HumanVerification() {
 
 function FourRecords() {
   return (
-    <div className="taste-why-records" id="why-four-records" data-taste-reveal>
+    <div className="taste-why-records" id="why-four-records" data-taste-reveal data-taste-scroll>
       <div className="taste-why-record-heading"><SectionLabel>Four separate records</SectionLabel><h3>FrameWire preserves the difference between evidence, machine interpretation and human conclusion.</h3></div>
       <div className="taste-why-record-flow">{recordLayers.map((record, index) => { const Icon = record.icon; return <article key={record.name} className={record.className}><header><span>{String(index + 1).padStart(2, "0")}</span><Icon size={19} /></header><small>{record.meta}</small><h4>{record.name}</h4><p>{record.detail}</p>{index < recordLayers.length - 1 && <ArrowRight className="taste-why-record-arrow" size={18} aria-hidden="true" />}</article>; })}</div>
       <p className="taste-why-record-note"><HistoryIcon />One report decision never silently rewrites historical evidence.</p>
@@ -317,7 +317,7 @@ function Philosophy() {
 
 export default function WhyFrameWire() {
   return (
-    <section className="taste-why" id="why-framewire" aria-labelledby="why-framewire-title">
+    <section className="taste-why" id="why-framewire" aria-labelledby="why-framewire-title" data-taste-nav="taste-method">
       <header className="taste-why-opening taste-story-stage" data-taste-reveal>
         <div><SectionLabel>Why FrameWire</SectionLabel><h2 id="why-framewire-title">Intelligence should strengthen judgment—not replace it.</h2></div>
         <div><p>FrameWire preserves evidence, organises competing perspectives and helps a human understand what the available material can responsibly support.</p><strong>AI assists. Evidence remains visible. Humans decide.</strong><small>Illustrative product demonstration.</small></div>

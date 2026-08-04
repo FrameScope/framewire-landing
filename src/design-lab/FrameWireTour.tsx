@@ -296,6 +296,7 @@ function StoryVisual({ stageIndex, motionActive, reviewChoice, onReviewChoice, o
   }
 
   if (stageIndex === 8) {
+    const reportEligible = reviewChoice === "Accept" || reviewChoice === "Qualify";
     const reportSections = [
       ["Summary", "Reviewed account of the public record."],
       ["Evidence", "Exact preserved sources and citations."],
@@ -305,7 +306,7 @@ function StoryVisual({ stageIndex, motionActive, reviewChoice, onReviewChoice, o
       ["Human conclusion", "Qualified by the reviewer."],
     ];
     return (
-      <div className={"taste-film-scene taste-film-report-scene " + motionClass}>
+      <div className={`taste-film-scene taste-film-report-scene ${motionClass} ${reportEligible ? "report-open" : "report-held"}`}>
         <div className="taste-film-citation-sources">
           <article><LockKeyhole size={14} /><span>Archived source</span><strong>DEMO-EVIDENCE-001</strong></article>
           <article><Quote size={14} /><span>Exact evidence</span><strong>Attributed claim span</strong></article>
@@ -408,8 +409,8 @@ export default function FrameWireTour({ activeStage, onStageChange, onDefinition
   };
 
   return (
-    <section className={"taste-tour taste-film-tour taste-story-stage tone-" + stage.tone} id="framewire-tour" tabIndex={-1} aria-labelledby="framewire-tour-title">
-      <div className="taste-tour-header">
+    <section className={"taste-tour taste-film-tour taste-story-stage tone-" + stage.tone} id="framewire-tour" tabIndex={-1} aria-labelledby="framewire-tour-title" data-taste-nav="framewire-tour" data-taste-scroll>
+      <div className="taste-tour-header" data-taste-reveal>
         <div>
           <p className="taste-kicker">Guided FrameWire tour</p>
           <h2 id="framewire-tour-title">Watch one record become a report.</h2>
@@ -417,7 +418,7 @@ export default function FrameWireTour({ activeStage, onStageChange, onDefinition
         <p>Follow the same fictional public record as it is collected, preserved, examined, verified by a human and retained as reviewed context.</p>
       </div>
 
-      <div className="taste-tour-case">
+      <div className="taste-tour-case" data-taste-reveal>
         <span>Illustrative walkthrough</span>
         <p>No real event or operational claim is represented. A news article, official statement and public posts describe the same fictional event differently.</p>
       </div>
@@ -443,7 +444,7 @@ export default function FrameWireTour({ activeStage, onStageChange, onDefinition
         </div>
       </div>
 
-      <div className="taste-film-stage" id="tour-film-stage" role="tabpanel" aria-live="polite">
+      <div className="taste-film-stage" id="tour-film-stage" role="tabpanel" aria-live="polite" data-taste-reveal>
         <header className="taste-film-stage-head">
           <div><FileText size={15} /><span>DEMO-EVIDENCE-001</span></div>
           <span>{reducedMotion ? "Reduced motion" : motionActive ? "Evidence journey active" : "Ready — select Play or Next"}</span>
