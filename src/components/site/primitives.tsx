@@ -2,12 +2,11 @@ import { useEffect, useRef, useState, type ReactNode, type RefObject } from "rea
 import { Wordmark } from "../ui/Wordmark";
 import { Icon } from "../ui/Icon";
 import { useReducedMotion } from "../motion/sceneClock";
-import { CONTACT_EMAIL, CONTACT_MAILTO, SIGNIN_URL } from "../../config";
+import { BETA_MAILTO, CONTACT_EMAIL, CONTACT_MAILTO, SIGNIN_URL } from "../../config";
 
 /* Shared homepage primitives: scroll-triggered clock, narrow detection,
    sticky navigation, section wrapper, and footer. */
 
-const BETA_MAILTO = `mailto:${CONTACT_EMAIL}?subject=FrameWire%20Private%20Beta%20Application`;
 
 export function useIsNarrow(): boolean {
   const [n, setN] = useState(() => typeof window !== "undefined" && window.matchMedia("(max-width: 760px)").matches);

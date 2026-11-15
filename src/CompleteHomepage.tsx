@@ -16,9 +16,8 @@ import { PipelineScene } from "./components/motion/scenes/PipelineScene";
 import { useReducedMotion } from "./components/motion/sceneClock";
 import type { SceneProps } from "./components/motion/scenes/shared";
 import { FLOW_DEFINITION, FLOW_VERBS, FLOW_RECAP } from "./site/content";
-import { CONTACT_EMAIL, CONTACT_MAILTO } from "./config";
+import { BETA_MAILTO, CONTACT_EMAIL, CONTACT_MAILTO } from "./config";
 
-const BETA_MAILTO = `mailto:${CONTACT_EMAIL}?subject=FrameWire%20Private%20Beta%20Application`;
 
 function scrollTo(e: MouseEvent, href: string) {
   e.preventDefault();

@@ -12,10 +12,11 @@
  */
 export const SIGNIN_URL = "";
 
-/** The only contact address the site uses. */
-export const CONTACT_EMAIL = "framewireIO@gmail.com";
+/** Public addresses for general enquiries and private beta requests. */
+export const CONTACT_EMAIL = "info@framewire.io";
+export const BETA_EMAIL = "betarequest@framewire.io";
 export const CONTACT_MAILTO = `mailto:${CONTACT_EMAIL}`;
-export const BETA_MAILTO = `mailto:${CONTACT_EMAIL}?subject=FrameWire%20Private%20Beta%20Access`;
+export const BETA_MAILTO = `mailto:${BETA_EMAIL}?subject=FrameWire%20Private%20Beta%20Access`;
 
 /** Served from public/ → available at site root. */
 export const LOGO = "/framewire-logo-white.png";
