@@ -12,6 +12,7 @@ import "./styles/evidence-v2.css";
 import "./styles/governance-v2.css";
 import "./styles/use-cases-v2.css";
 import "./styles/resources-v2.css";
+import "./styles/technology-v2.css";
 // Complete FrameWire public homepage — the guided tour is one section within it.
 import CompleteHomepage from "./CompleteHomepage";
 import TasteV1 from "./design-lab/TasteV1";
@@ -23,6 +24,7 @@ import EvidenceV2Page from "./design-lab/evidence-v2/EvidenceV2";
 import GovernanceV2Page from "./design-lab/governance-v2/GovernanceV2";
 import UseCasesV2Page from "./design-lab/use-cases-v2/UseCasesV2";
 import ResourcesV2Page from "./design-lab/resources-v2/ResourcesV2";
+import TechnologyV2Page from "./design-lab/technology-v2/TechnologyV2";
 
 const currentPath = window.location.pathname.replace(/\/$/, "") || "/";
 const isTasteV1 = currentPath === "/design-lab/taste-v1" || currentPath === "/design-lab/platform-v1";
@@ -34,6 +36,7 @@ const isEvidenceV2 = currentPath === "/evidence" || currentPath === "/design-lab
 const isGovernanceV2 = currentPath === "/governance" || currentPath === "/design-lab/governance-v2";
 const isUseCasesV2 = currentPath === "/use-cases" || currentPath === "/design-lab/use-cases-v2";
 const isResourcesV2 = currentPath === "/resources" || currentPath === "/design-lab/resources-v2";
+const isTechnologyV2 = currentPath === "/technology" || currentPath === "/design-lab/technology-v2";
 
 const pageTitles: Record<string, string> = {
   "/": "FrameWire — Understand Before Concluding",
@@ -44,15 +47,16 @@ const pageTitles: Record<string, string> = {
   "/governance": "Governance — FrameWire",
   "/use-cases": "Use Cases — FrameWire",
   "/resources": "Resources — FrameWire",
+  "/technology": "Technology & Architecture — FrameWire",
 };
 
-const designLabCanonicalPath = currentPath.match(/^\/design-lab\/(home|platform|lenses|workflows|evidence|governance|use-cases|resources)-v2$/)?.[1];
+const designLabCanonicalPath = currentPath.match(/^\/design-lab\/(home|platform|lenses|workflows|evidence|governance|use-cases|resources|technology)-v2$/)?.[1];
 const metadataPath = designLabCanonicalPath === "home" ? "/" : designLabCanonicalPath ? `/${designLabCanonicalPath}` : currentPath;
 if (pageTitles[metadataPath]) document.title = pageTitles[metadataPath];
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    {isHomeV2 ? <HomeV2Page /> : isPlatformV2 ? <PlatformV2Page /> : isLensesV2 ? <LensesV2Page /> : isWorkflowsV2 ? <WorkflowsV2Page /> : isEvidenceV2 ? <EvidenceV2Page /> : isGovernanceV2 ? <GovernanceV2Page /> : isUseCasesV2 ? <UseCasesV2Page /> : isResourcesV2 ? <ResourcesV2Page /> : isTasteV1 ? <TasteV1 /> : <CompleteHomepage />}
+    {isHomeV2 ? <HomeV2Page /> : isPlatformV2 ? <PlatformV2Page /> : isLensesV2 ? <LensesV2Page /> : isWorkflowsV2 ? <WorkflowsV2Page /> : isEvidenceV2 ? <EvidenceV2Page /> : isGovernanceV2 ? <GovernanceV2Page /> : isUseCasesV2 ? <UseCasesV2Page /> : isResourcesV2 ? <ResourcesV2Page /> : isTechnologyV2 ? <TechnologyV2Page /> : isTasteV1 ? <TasteV1 /> : <CompleteHomepage />}
   </StrictMode>,
 );
 

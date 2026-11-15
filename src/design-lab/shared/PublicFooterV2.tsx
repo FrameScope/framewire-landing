@@ -4,7 +4,7 @@ const footerGroups = [
   { title: "Platform", links: [["Public Information", "/platform#public-information"], ["Preserve", "/platform#raw-archive"], ["Discover", "/platform#discover"], ["Investigate", "/platform#decide-to-investigate"], ["Analyze", "/platform#intelligence-lenses"], ["Report", "/platform#governed-report"]] },
   { title: "Capabilities", links: [["Workflows", "/workflows#live-observation"], ["Lenses", "/lenses#narrative"], ["Evidence", "/evidence#public-source"], ["Guided Cognition", "/workflows#guided-reasoning"], ["Data Analytics", "/platform#cross-lens-context"], ["Source Inspector", "/evidence#source-inspector"], ["Tracking", "/workflows#tracking-alerts"]] },
   { title: "Governance", links: [["BYOK", "/governance#byok"], ["Provider Control", "/governance#provider-model"], ["Access", "/governance#roles-ownership"], ["Cost", "/governance#cost-budget"], ["Operations", "/governance#runtime-truth"]] },
-  { title: "Company", links: [["About", "/#beta"], ["Use Cases", "/use-cases#breaking-event"], ["Resources", "/resources#getting-started"], ["Contact", BETA_MAILTO]] },
+  { title: "Company", links: [["About", "/#beta"], ["Technology", "/technology"], ["Use Cases", "/use-cases#breaking-event"], ["Resources", "/resources#getting-started"], ["Contact", BETA_MAILTO]] },
 ] as const;
 
 export function PublicFooterV2() {

@@ -46,7 +46,7 @@ function currentResourceIdFromHash(): ResourceId {
   return resourceIds.includes(hash) ? hash : resourceDefinitions[0].id as ResourceId;
 }
 
-export function PublicHeaderV2({ activePage }: { activePage: "home" | "platform" | "lenses" | "workflows" | "evidence" | "governance" | "use-cases" | "resources" }) {
+export function PublicHeaderV2({ activePage }: { activePage: "home" | "platform" | "lenses" | "workflows" | "evidence" | "governance" | "use-cases" | "resources" | "technology" }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobilePlatformOpen, setMobilePlatformOpen] = useState(false);
   const [mobileLensesOpen, setMobileLensesOpen] = useState(false);
@@ -528,6 +528,7 @@ export function PublicHeaderV2({ activePage }: { activePage: "home" | "platform"
 
         <nav className="p2-desktop-nav" aria-label="Primary navigation">
           <a href="/" className={activePage === "home" ? "active" : ""} aria-current={activePage === "home" ? "page" : undefined}>Home</a>
+          <a href="/technology" className={activePage === "technology" ? "active" : ""} aria-current={activePage === "technology" ? "page" : undefined}>Technology</a>
           <div ref={platformControlRef} className="p2-header-platform">
             <button
               ref={platformButtonRef}
@@ -681,6 +682,7 @@ export function PublicHeaderV2({ activePage }: { activePage: "home" | "platform"
           </div>
           <nav className="p2-mobile-primary" aria-label="Mobile primary pages">
             <a href="/" aria-current={activePage === "home" ? "page" : undefined} onClick={closeMobile}>Home</a>
+            <a href="/technology" aria-current={activePage === "technology" ? "page" : undefined} onClick={closeMobile}>Technology</a>
             <button type="button" className="p2-mobile-platform-trigger" aria-expanded={mobilePlatformOpen} aria-controls="p2-mobile-platform-menu" aria-current={activePage === "platform" ? "page" : undefined} onClick={() => { setMobileLensesOpen(false); setMobileWorkflowsOpen(false); setMobileEvidenceOpen(false); setMobileGovernanceOpen(false); setMobileUseCasesOpen(false); setMobileResourcesOpen(false); setMobilePlatformOpen((open) => !open); }}>
               Platform <ChevronDown size={15} aria-hidden="true" />
             </button>
